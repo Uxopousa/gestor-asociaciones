@@ -2,13 +2,17 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-app.set('view engine','ejs');
+
+// Configuración
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.get("/", (req, res) => {
-    res.render('index');
-});
+// Rutas
+const indexRouter = require("./routes/index");
 
+app.use("/", indexRouter);
+
+// Servidor
 app.listen(3000, () => {
     console.log("Servidor iniciado en http://localhost:3000");
 });
