@@ -13,9 +13,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // Rutas
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
+const sociosRouter = require ("./routes/socios");
 
 app.use("/", indexRouter);
 app.use ("/login",authRouter);
+app.use ("/socios",sociosRouter);
+
 // Servidor
 app.listen(3000, () => {
     console.log("Servidor iniciado en http://localhost:3000");
