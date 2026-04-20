@@ -1,21 +1,37 @@
 <%- include("../partials/head") %>
 
-<main>
+<body>
 
-    <section class="page-header">
+    <h1>Socios</h1>
 
-        <h1>Socios</h1>
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
 
-        <a href="/socios/nuevo">Nuevo socio</a>
+        <tbody>
+            <% socios.forEach(socio => { %>
 
-    </section>
+                <tr>
+                    <td><%= socio.nombre %></td>
+                    <td><%= socio.apellidos %></td>
+                    <td><%= socio.dni %></td>
+                    <td><%= socio.email %></td>
+                    <td><%= socio.telefono %></td>
+                    <td><%= socio.activo ? "Activo" : "Inactivo" %></td>
+                </tr>
 
-    <section class="members-list">
+            <% }) %>
+        </tbody>
+    </table>
 
-        <p>No hay socios registrados.</p>
-
-    </section>
-
-</main>
+</body>
 
 <%- include("../partials/footer") %>

@@ -1,10 +1,16 @@
 const express = require("express");
-
 const router = express.Router();
 
-router.get("/",(req,res)=>{
+const socioModel = require("../models/socioModel");
 
-    res.render("socios/index");
-})
+router.get("/", async (req, res) => {
+
+    const socios = await socioModel.obtenerTodos();
+    console.log(socios);
+
+    res.render("socios/index", {
+        socios
+    });
+});
 
 module.exports = router;

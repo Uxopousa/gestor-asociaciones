@@ -1,8 +1,18 @@
-<%- include ('partials/head') %>
+<%- include("partials/head") %>
+
 <body>
 
     <h1>Gestor de Asociaciones</h1>
 
-    <p>Mi primera aplicación con Express.</p>
+    <p>Bienvenido al Gestor de Asociaciones.</p>
 
-<%- include ('partials/footer') %>
+    <nav>
+        <ul>
+            <li><a href="/socios">Gestión de socios</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+    </nav>
+
+</body>
+
+<%- include("partials/footer") %>
