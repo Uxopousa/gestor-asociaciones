@@ -1,0 +1,20 @@
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: gestor-asociaciones-db
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gestor_asociaciones
+      MYSQL_USER: gestor
+      MYSQL_PASSWORD: gestor
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
