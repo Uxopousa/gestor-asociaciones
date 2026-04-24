@@ -44,8 +44,43 @@ res.redirect("/socios");
         res.status(500).send("Error al crear el socio.");
     }
 }
+async function editar(req, res) {
+
+    const socio = await socioModel.obtenerPorId(req.params.id);
+
+    res.render("socios/editar", {
+        socio
+    });
+
+}
+
+async function actualizar(req, res) {
+
+    const socio = {
+        nombre: req.body.nombre,
+        apellidos: req.body.apellidos,
+        dni: req.body.dni,
+        email: req.body.email || null,
+        telefono: req.body.telefono || null,
+        direccion: req.body.direccion || null,
+        fecha_alta: req.body.fecha_alta,
+        activo: req.body.activo === "1"
+    };
+
+    await socioModel.actualizar(req.params.id, socio);
+
+    req.session.mensaje = {
+        tipo: "success",
+        texto: "Socio actualizado correctamente."
+    };
+
+    res.redirect("/socios");
+
+}
 module.exports = {
     index,
     nuevo,
-    crear
+    crear,
+    editar,
+    actualizar
 };

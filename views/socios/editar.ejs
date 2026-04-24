@@ -1,0 +1,96 @@
+<%- include("../partials/head") %>
+
+<body>
+
+<h1>Editar socio</h1>
+
+<form action="/socios/<%= socio.id %>" method="POST">
+
+    <p>
+        <label>Nombre</label><br>
+        <input
+            type="text"
+            name="nombre"
+            value="<%= socio.nombre %>"
+            required>
+    </p>
+
+    <p>
+        <label>Apellidos</label><br>
+        <input
+            type="text"
+            name="apellidos"
+            value="<%= socio.apellidos %>"
+            required>
+    </p>
+
+    <p>
+        <label>DNI</label><br>
+        <input
+            type="text"
+            name="dni"
+            value="<%= socio.dni %>"
+            required>
+    </p>
+
+    <p>
+        <label>Email</label><br>
+        <input
+            type="email"
+            name="email"
+            value="<%= socio.email || "" %>">
+    </p>
+
+    <p>
+        <label>Teléfono</label><br>
+        <input
+            type="text"
+            name="telefono"
+            value="<%= socio.telefono || "" %>">
+    </p>
+
+    <p>
+        <label>Dirección</label><br>
+        <input
+            type="text"
+            name="direccion"
+            value="<%= socio.direccion || "" %>">
+    </p>
+
+    <p>
+        <label>Fecha alta</label><br>
+        <input
+            type="date"
+            name="fecha_alta"
+            value="<%= socio.fecha_alta.toISOString().split('T')[0] %>"
+            required>
+    </p>
+
+    <p>
+        <label>Estado</label><br>
+
+        <select name="activo">
+
+            <option value="1" <%= socio.activo ? "selected" : "" %>>
+                Activo
+            </option>
+
+            <option value="0" <%= !socio.activo ? "selected" : "" %>>
+                Inactivo
+            </option>
+
+        </select>
+
+    </p>
+
+    <button type="submit">
+        Guardar cambios
+    </button>
+
+    <a href="/socios">Cancelar</a>
+
+</form>
+
+</body>
+
+<%- include("../partials/footer") %>

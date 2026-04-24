@@ -41,7 +41,49 @@ async function crear(socio) {
 
     return resultado;
 }
+async function obtenerPorId(id) {
+    const [rows] = await pool.query(
+        "SELECT * FROM socios WHERE id = ?",
+        [id]
+    );
+
+    return rows[0];
+}
+
+async function actualizar(id, socio) {
+    const sql = `
+        UPDATE socios
+        SET
+            nombre = ?,
+            apellidos = ?,
+            dni = ?,
+            email = ?,
+            telefono = ?,
+            direccion = ?,
+            fecha_alta = ?,
+            activo = ?
+        WHERE id = ?
+    `;
+
+    const valores = [
+        socio.nombre,
+        socio.apellidos,
+        socio.dni,
+        socio.email,
+        socio.telefono,
+        socio.direccion,
+        socio.fecha_alta,
+        socio.activo,
+        id
+    ];
+
+    const [resultado] = await pool.query(sql, valores);
+
+    return resultado;
+}
 module.exports = {
     obtenerTodos,
-    crear
+    crear,
+    obtenerPorId,
+    actualizar
 };

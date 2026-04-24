@@ -10,32 +10,41 @@
     <a href="/socios/nuevo"> Nuevo socio</a>
 </p>
     <table border="1" cellpadding="8">
-        <thead>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <% socios.forEach(socio => { %>
+
             <tr>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>DNI</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Estado</th>
+                <td><%= socio.nombre %></td>
+                <td><%= socio.apellidos %></td>
+                <td><%= socio.dni %></td>
+                <td><%= socio.email %></td>
+                <td><%= socio.telefono %></td>
+                <td><%= socio.activo ? "Activo" : "Inactivo" %></td>
+
+                <td>
+                    <a href="/socios/<%= socio.id %>/editar">
+                        Editar
+                    </a>
+                </td>
             </tr>
-        </thead>
 
-        <tbody>
-            <% socios.forEach(socio => { %>
+        <% }) %>
 
-                <tr>
-                    <td><%= socio.nombre %></td>
-                    <td><%= socio.apellidos %></td>
-                    <td><%= socio.dni %></td>
-                    <td><%= socio.email %></td>
-                    <td><%= socio.telefono %></td>
-                    <td><%= socio.activo ? "Activo" : "Inactivo" %></td>
-                </tr>
-
-            <% }) %>
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
 </body>
 
