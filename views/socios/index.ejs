@@ -3,7 +3,12 @@
 <body>
 
     <h1>Socios</h1>
-
+    <% if (mensaje) { %>
+    <p><%= mensaje.texto %></p>
+<% } %>
+<p>
+    <a href="/socios/nuevo"> Nuevo socio</a>
+</p>
     <table border="1" cellpadding="8">
         <thead>
             <tr>

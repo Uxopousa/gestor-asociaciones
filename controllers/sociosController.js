@@ -3,8 +3,13 @@ const socioModel = require("../models/socioModel");
 async function index(req, res) {
     const socios = await socioModel.obtenerTodos();
 
+    const mensaje = req.session.mensaje;
+
+    delete req.session.mensaje;
+
     res.render("socios/index", {
-        socios
+        socios,
+        mensaje
     });
 }
 
@@ -13,20 +18,31 @@ function nuevo(req, res) {
 }
 
 async function crear(req, res) {
-    const socio = {
-        nombre: req.body.nombre,
-        apellidos: req.body.apellidos,
-        dni: req.body.dni,
-        email: req.body.email || null,
-        telefono: req.body.telefono || null,
-        direccion: req.body.direccion || null,
-        fecha_alta: req.body.fecha_alta,
-        activo: true
-    };
+    try {
+        const socio = {
+            nombre: req.body.nombre,
+            apellidos: req.body.apellidos,
+            dni: req.body.dni,
+            email: req.body.email || null,
+            telefono: req.body.telefono || null,
+            direccion: req.body.direccion || null,
+            fecha_alta: req.body.fecha_alta,
+            activo: true
+        };
 
-    await socioModel.crear(socio);
+        await socioModel.crear(socio);
 
-    res.redirect("/socios");
+req.session.mensaje = {
+    tipo: "success",
+    texto: "Socio creado correctamente."
+};
+
+res.redirect("/socios");
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).send("Error al crear el socio.");
+    }
 }
 module.exports = {
     index,
