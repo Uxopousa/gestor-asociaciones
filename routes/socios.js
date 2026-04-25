@@ -12,4 +12,5 @@ router.post("/", sociosController.crear);
 router.get("/:id/editar", sociosController.editar);
 
 router.post("/:id", sociosController.actualizar);
+router.post("/:id/eliminar", sociosController.eliminar);
 module.exports = router;

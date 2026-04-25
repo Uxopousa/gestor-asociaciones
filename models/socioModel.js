@@ -81,9 +81,22 @@ async function actualizar(id, socio) {
 
     return resultado;
 }
+async function eliminar(id) {
+    const [resultado] = await pool.query(
+        `
+        UPDATE socios
+        SET activo = FALSE
+        WHERE id = ?
+        `,
+        [id]
+    );
+
+    return resultado;
+}
 module.exports = {
     obtenerTodos,
     crear,
     obtenerPorId,
-    actualizar
+    actualizar,
+    eliminar
 };

@@ -77,10 +77,23 @@ async function actualizar(req, res) {
     res.redirect("/socios");
 
 }
+async function eliminar(req, res) {
+
+    await socioModel.eliminar(req.params.id);
+
+    req.session.mensaje = {
+        tipo: "success",
+        texto: "Socio dado de baja correctamente."
+    };
+
+    res.redirect("/socios");
+
+}
 module.exports = {
     index,
     nuevo,
     crear,
     editar,
-    actualizar
+    actualizar,
+    eliminar
 };

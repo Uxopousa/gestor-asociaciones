@@ -3,48 +3,69 @@
 <body>
 
     <h1>Socios</h1>
+
     <% if (mensaje) { %>
-    <p><%= mensaje.texto %></p>
-<% } %>
-<p>
-    <a href="/socios/nuevo"> Nuevo socio</a>
-</p>
+        <p><%= mensaje.texto %></p>
+    <% } %>
+
+    <p>
+        <a href="/socios/nuevo">➕ Nuevo socio</a>
+    </p>
+
     <table border="1" cellpadding="8">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>DNI</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        <% socios.forEach(socio => { %>
-
+        <thead>
             <tr>
-                <td><%= socio.nombre %></td>
-                <td><%= socio.apellidos %></td>
-                <td><%= socio.dni %></td>
-                <td><%= socio.email %></td>
-                <td><%= socio.telefono %></td>
-                <td><%= socio.activo ? "Activo" : "Inactivo" %></td>
-
-                <td>
-                    <a href="/socios/<%= socio.id %>/editar">
-                        Editar
-                    </a>
-                </td>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
+        </thead>
 
-        <% }) %>
+        <tbody>
 
-    </tbody>
-</table>
+            <% socios.forEach(socio => { %>
+
+                <tr>
+                    <td><%= socio.nombre %></td>
+                    <td><%= socio.apellidos %></td>
+                    <td><%= socio.dni %></td>
+                    <td><%= socio.email %></td>
+                    <td><%= socio.telefono %></td>
+                    <td><%= socio.activo ? "Activo" : "Inactivo" %></td>
+
+                    <td>
+                        <a href="/socios/<%= socio.id %>/editar">
+                            Editar
+                        </a>
+
+                        <% if (socio.activo) { %>
+
+                            <form
+                                action="/socios/<%= socio.id %>/eliminar"
+                                method="POST"
+                                style="display:inline;">
+
+                                <button
+                                    type="submit"
+                                    onclick="return confirm('¿Dar de baja este socio?')">
+                                    Dar de baja
+                                </button>
+
+                            </form>
+
+                        <% } %>
+                    </td>
+
+                </tr>
+
+            <% }) %>
+
+        </tbody>
+    </table>
 
 </body>
 
