@@ -9,6 +9,7 @@ app.set("views", path.join(__dirname, "views"));
 
 //Archivos públicos
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 const indexRouter = require("./routes/index");

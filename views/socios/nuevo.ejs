@@ -1,0 +1,95 @@
+<%- include("../partials/head") %>
+
+<body>
+
+    <h1>Nuevo socio</h1>
+
+    <form action="/socios" method="POST">
+
+        <div>
+            <label for="nombre">Nombre</label><br>
+            <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="apellidos">Apellidos</label><br>
+            <input
+                type="text"
+                id="apellidos"
+                name="apellidos"
+                required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="dni">DNI</label><br>
+            <input
+                type="text"
+                id="dni"
+                name="dni"
+                required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="email">Email</label><br>
+            <input
+                type="email"
+                id="email"
+                name="email">
+        </div>
+
+        <br>
+
+        <div>
+            <label for="telefono">Teléfono</label><br>
+            <input
+                type="text"
+                id="telefono"
+                name="telefono">
+        </div>
+
+        <br>
+
+        <div>
+            <label for="direccion">Dirección</label><br>
+            <input
+                type="text"
+                id="direccion"
+                name="direccion">
+        </div>
+
+        <br>
+
+        <div>
+            <label for="fecha_alta">Fecha de alta</label><br>
+            <input
+                type="date"
+                id="fecha_alta"
+                name="fecha_alta"
+                required>
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Guardar socio
+        </button>
+
+    </form>
+
+    <p>
+        <a href="/socios">Volver al listado</a>
+    </p>
+
+</body>
+
+<%- include("../partials/footer") %>

@@ -1,16 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const socioModel = require("../models/socioModel");
+const sociosController = require("../controllers/sociosController");
 
-router.get("/", async (req, res) => {
+router.get("/", sociosController.index);
 
-    const socios = await socioModel.obtenerTodos();
-    console.log(socios);
+router.get("/nuevo", sociosController.nuevo);
 
-    res.render("socios/index", {
-        socios
-    });
-});
+router.post("/", sociosController.crear);
 
 module.exports = router;
