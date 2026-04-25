@@ -4,17 +4,19 @@ async function index(req, res) {
     const socios = await socioModel.obtenerTodos();
 
     const mensaje = req.session.mensaje;
-
     delete req.session.mensaje;
 
     res.render("socios/index", {
+        titulo: "Socios",
         socios,
         mensaje
     });
 }
 
 function nuevo(req, res) {
-    res.render("socios/nuevo");
+    res.render("socios/nuevo", {
+        titulo: "Nuevo socio"
+    });
 }
 
 async function crear(req, res) {
@@ -32,26 +34,26 @@ async function crear(req, res) {
 
         await socioModel.crear(socio);
 
-req.session.mensaje = {
-    tipo: "success",
-    texto: "Socio creado correctamente."
-};
+        req.session.mensaje = {
+            tipo: "success",
+            texto: "Socio creado correctamente."
+        };
 
-res.redirect("/socios");
+        res.redirect("/socios");
+
     } catch (error) {
         console.error(error);
-
         res.status(500).send("Error al crear el socio.");
     }
 }
-async function editar(req, res) {
 
+async function editar(req, res) {
     const socio = await socioModel.obtenerPorId(req.params.id);
 
     res.render("socios/editar", {
+        titulo: "Editar socio",
         socio
     });
-
 }
 
 async function actualizar(req, res) {
@@ -75,8 +77,8 @@ async function actualizar(req, res) {
     };
 
     res.redirect("/socios");
-
 }
+
 async function eliminar(req, res) {
 
     await socioModel.eliminar(req.params.id);
@@ -87,8 +89,8 @@ async function eliminar(req, res) {
     };
 
     res.redirect("/socios");
-
 }
+
 module.exports = {
     index,
     nuevo,

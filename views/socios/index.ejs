@@ -2,71 +2,107 @@
 
 <body>
 
-    <h1>Socios</h1>
+    <%- include("../partials/header") %>
 
-    <% if (mensaje) { %>
-        <p><%= mensaje.texto %></p>
+    <div class="layout">
+
+        <%- include("../partials/sidebar") %>
+
+        <main class="main">
+
+            <div class="page-header">
+
+                <h1>Socios</h1>
+
+                <a href="/socios/nuevo" class="btn btn-primary">
+                    Nuevo socio
+                </a>
+
+            </div>
+
+            <%- include("../partials/flash") %>
+
+            <div class="card">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>DNI</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <% socios.forEach(socio => { %>
+
+                            <tr>
+
+                                <td><%= socio.nombre %></td>
+                                <td><%= socio.apellidos %></td>
+                                <td><%= socio.dni %></td>
+                                <td><%= socio.email %></td>
+                                <td><%= socio.telefono %></td>
+<td>
+    <% if (socio.activo) { %>
+        <span class="badge badge-success">Activo</span>
+    <% } else { %>
+        <span class="badge badge-danger">Inactivo</span>
     <% } %>
+</td>
+                                <td>
 
-    <p>
-        <a href="/socios/nuevo">➕ Nuevo socio</a>
-    </p>
+                                    <div class="table-actions">
 
-    <table border="1" cellpadding="8">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>DNI</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
+                                        <a
+                                            href="/socios/<%= socio.id %>/editar"
+                                            class="btn btn-warning btn-sm">
+                                            Editar
+                                        </a>
 
-        <tbody>
+                                        <% if (socio.activo) { %>
 
-            <% socios.forEach(socio => { %>
+                                            <form
+                                                action="/socios/<%= socio.id %>/eliminar"
+                                                method="POST">
 
-                <tr>
-                    <td><%= socio.nombre %></td>
-                    <td><%= socio.apellidos %></td>
-                    <td><%= socio.dni %></td>
-                    <td><%= socio.email %></td>
-                    <td><%= socio.telefono %></td>
-                    <td><%= socio.activo ? "Activo" : "Inactivo" %></td>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Dar de baja este socio?')">
 
-                    <td>
-                        <a href="/socios/<%= socio.id %>/editar">
-                            Editar
-                        </a>
+                                                    Dar de baja
 
-                        <% if (socio.activo) { %>
+                                                </button>
 
-                            <form
-                                action="/socios/<%= socio.id %>/eliminar"
-                                method="POST"
-                                style="display:inline;">
+                                            </form>
 
-                                <button
-                                    type="submit"
-                                    onclick="return confirm('¿Dar de baja este socio?')">
-                                    Dar de baja
-                                </button>
+                                        <% } %>
 
-                            </form>
+                                    </div>
 
-                        <% } %>
-                    </td>
+                                </td>
 
-                </tr>
+                            </tr>
 
-            <% }) %>
+                        <% }) %>
 
-        </tbody>
-    </table>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
 
 </body>
 
-<%- include("../partials/footer") %>
+</html>
