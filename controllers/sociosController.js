@@ -1,40 +1,45 @@
 const socioModel = require("../models/socioModel");
 
+function construirSocioDesdeFormulario(body) {
+    return {
+        nombre: body.nombre,
+        apellidos: body.apellidos,
+        dni: body.dni,
+        email: body.email || null,
+        telefono: body.telefono || null,
+        direccion: body.direccion || null,
+        fecha_alta: body.fecha_alta,
+        activo: body.activo === "1"
+    };
+}
+
 async function index(req, res) {
     const socios = await socioModel.obtenerTodos();
 
-    const mensaje = req.session.mensaje;
-    delete req.session.mensaje;
-
     res.render("socios/index", {
         titulo: "Socios",
-        socios,
-        mensaje
+        subtitulo: "Gestión de altas, bajas y seguimiento de miembros.",
+        socios
     });
 }
 
 function nuevo(req, res) {
     res.render("socios/nuevo", {
-        titulo: "Nuevo socio"
+        titulo: "Nuevo socio",
+        subtitulo: "Registrar un nuevo miembro en el sistema."
     });
 }
 
 async function crear(req, res) {
     try {
-        const socio = {
-            nombre: req.body.nombre,
-            apellidos: req.body.apellidos,
-            dni: req.body.dni,
-            email: req.body.email || null,
-            telefono: req.body.telefono || null,
-            direccion: req.body.direccion || null,
-            fecha_alta: req.body.fecha_alta,
-            activo: true
-        };
+        const socio = construirSocioDesdeFormulario({
+            ...req.body,
+            activo: "1"
+        });
 
         await socioModel.crear(socio);
 
-        req.session.mensaje = {
+        req.session.flashMessage = {
             tipo: "success",
             texto: "Socio creado correctamente."
         };
@@ -50,28 +55,29 @@ async function crear(req, res) {
 async function editar(req, res) {
     const socio = await socioModel.obtenerPorId(req.params.id);
 
+    if (!socio) {
+        return res.status(404).send("Socio no encontrado.");
+    }
+
     res.render("socios/editar", {
         titulo: "Editar socio",
+        subtitulo: "Actualiza los datos de un miembro existente.",
         socio
     });
 }
 
 async function actualizar(req, res) {
+    const socioExistente = await socioModel.obtenerPorId(req.params.id);
 
-    const socio = {
-        nombre: req.body.nombre,
-        apellidos: req.body.apellidos,
-        dni: req.body.dni,
-        email: req.body.email || null,
-        telefono: req.body.telefono || null,
-        direccion: req.body.direccion || null,
-        fecha_alta: req.body.fecha_alta,
-        activo: req.body.activo === "1"
-    };
+    if (!socioExistente) {
+        return res.status(404).send("Socio no encontrado.");
+    }
+
+    const socio = construirSocioDesdeFormulario(req.body);
 
     await socioModel.actualizar(req.params.id, socio);
 
-    req.session.mensaje = {
+    req.session.flashMessage = {
         tipo: "success",
         texto: "Socio actualizado correctamente."
     };
@@ -83,7 +89,7 @@ async function eliminar(req, res) {
 
     await socioModel.eliminar(req.params.id);
 
-    req.session.mensaje = {
+    req.session.flashMessage = {
         tipo: "success",
         texto: "Socio dado de baja correctamente."
     };

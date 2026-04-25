@@ -1,0 +1,106 @@
+<%- include("../partials/head", { titulo, subtitulo }) %>
+<%- include("../partials/app-start") %>
+
+<%- include("../partials/page-header", {
+	eyebrow: "Resumen",
+	title: "Dashboard",
+	description: "Vista general del estado actual del proyecto y acceso rápido a los módulos ya preparados.",
+	action: '<a href="/socios/nuevo" class="btn-primary">Nuevo socio</a><a href="/socios" class="btn-secondary">Ir al listado</a>'
+}) %>
+
+<%- include("../partials/flash") %>
+
+<section class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+	<div class="stat-card">
+		<p class="text-xs font-medium uppercase tracking-[0.16em] text-zinc-500">Socios totales</p>
+		<p class="mt-3 text-3xl font-semibold tracking-tight text-zinc-950"><%= resumen.total %></p>
+		<p class="mt-2 text-sm leading-6 text-zinc-500">Registro completo del censo de miembros.</p>
+	</div>
+
+	<div class="stat-card">
+		<p class="text-xs font-medium uppercase tracking-[0.16em] text-zinc-500">Activos</p>
+		<p class="mt-3 text-3xl font-semibold tracking-tight text-zinc-950"><%= resumen.activos %></p>
+		<p class="mt-2 text-sm leading-6 text-zinc-500">Socios con estado operativo.</p>
+	</div>
+
+	<div class="stat-card">
+		<p class="text-xs font-medium uppercase tracking-[0.16em] text-zinc-500">Inactivos</p>
+		<p class="mt-3 text-3xl font-semibold tracking-tight text-zinc-950"><%= resumen.inactivos %></p>
+		<p class="mt-2 text-sm leading-6 text-zinc-500">Bajas lógicas o estados pausados.</p>
+	</div>
+
+	<div class="stat-card">
+		<p class="text-xs font-medium uppercase tracking-[0.16em] text-zinc-500">Módulos próximos</p>
+		<p class="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">6</p>
+		<p class="mt-2 text-sm leading-6 text-zinc-500">Cuotas, pagos, actividades, inscripciones, usuarios y configuración.</p>
+	</div>
+</section>
+
+<section class="grid gap-6 xl:grid-cols-[1.6fr_1fr]">
+	<div class="table-wrap">
+		<div class="border-b border-zinc-200 px-6 py-5">
+			<h3 class="text-base font-semibold text-zinc-950">Últimos socios registrados</h3>
+			<p class="mt-1 text-sm leading-6 text-zinc-500">Actividad reciente para seguir la evolución del padrón.</p>
+		</div>
+
+		<div class="overflow-x-auto">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>DNI</th>
+						<th>Alta</th>
+						<th>Estado</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% ultimosSocios.forEach((socio) => { %>
+						<tr>
+							<td>
+								<div class="font-medium text-zinc-950"><%= socio.nombre %> <%= socio.apellidos %></div>
+								<div class="mt-1 text-xs text-zinc-500"><%= socio.email || "Sin email" %></div>
+							</td>
+							<td><%= socio.dni %></td>
+							<td>
+								<%= new Date(socio.fecha_alta).toLocaleDateString("es-ES", {
+									day: "2-digit",
+									month: "short",
+									year: "numeric"
+								}) %>
+							</td>
+							<td>
+								<% if (socio.activo) { %>
+									<span class="badge-success">Activo</span>
+								<% } else { %>
+									<span class="badge-danger">Inactivo</span>
+								<% } %>
+							</td>
+						</tr>
+					<% }) %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="surface p-6">
+		<h3 class="text-base font-semibold text-zinc-950">Atajos</h3>
+		<p class="mt-2 text-sm leading-6 text-zinc-500">
+			Acciones frecuentes para operar el módulo de socios sin salir del flujo.
+		</p>
+
+		<div class="mt-6 space-y-2.5">
+			<a href="/socios" class="sidebar-link border-zinc-200 bg-zinc-50 text-zinc-900 hover:bg-zinc-100">
+				<span>Listado de socios</span>
+				<span class="text-xs text-zinc-400">Abrir</span>
+			</a>
+
+			<a href="/socios/nuevo" class="sidebar-link border-zinc-200 bg-zinc-50 text-zinc-900 hover:bg-zinc-100">
+				<span>Nuevo socio</span>
+				<span class="text-xs text-zinc-400">Alta</span>
+			</a>
+		</div>
+	</div>
+</section>
+
+<%- include("../partials/footer") %>

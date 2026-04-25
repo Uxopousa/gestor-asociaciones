@@ -1,5 +1,16 @@
-<header class="header">
-    <div class="header__logo">
-        Gestor de Asociaciones
+<header class="border-b border-zinc-200 bg-white">
+    <div class="mx-auto flex min-h-20 w-full max-w-[1440px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8 lg:py-5">
+        <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.26em] text-zinc-500">Gestor de Asociaciones</p>
+            <h1 class="mt-1 text-[16px] font-semibold leading-none text-zinc-950"><%= titulo || appName %></h1>
+
+            <% if (subtitulo) { %>
+                <p class="mt-2 text-sm text-zinc-500"><%= subtitulo %></p>
+            <% } %>
+        </div>
+
+        <span class="hidden rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-xs font-medium text-zinc-600 md:inline-flex md:self-start md:mt-1">
+            Panel administrativo
+        </span>
     </div>
 </header>

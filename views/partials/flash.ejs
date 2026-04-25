@@ -1,5 +1,7 @@
-<% if (mensaje) { %>
-<div class="flash flash--<%= mensaje.tipo %>">
-    <%= mensaje.texto %>
-</div>
+<% if (flashMessage) { %>
+    <div class="mb-6">
+        <div class="<%= flashMessage.tipo === 'success' ? 'flash-success' : flashMessage.tipo === 'warning' ? 'flash-warning' : 'flash-danger' %>">
+            <%= flashMessage.texto %>
+        </div>
+    </div>
 <% } %>

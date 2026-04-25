@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        @apply scroll-smooth;
+    }
+
+    body {
+        @apply font-sans text-zinc-950 bg-zinc-50;
+    }
+
+    ::selection {
+        @apply bg-zinc-900 text-white;
+    }
+}
+
+@layer components {
+    .surface {
+        @apply rounded-2xl border border-zinc-200 bg-white;
+    }
+
+    .auth-card {
+        @apply surface w-full max-w-lg p-6 sm:p-8;
+    }
+
+    .stat-card {
+        @apply surface p-5;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2.5 text-sm font-medium leading-none transition focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-primary {
+        @apply btn bg-zinc-900 text-white hover:bg-zinc-800;
+    }
+
+    .btn-secondary {
+        @apply btn border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50;
+    }
+
+    .btn-danger {
+        @apply btn bg-zinc-950 text-white hover:bg-zinc-800;
+    }
+
+    .btn-ghost {
+        @apply btn bg-transparent text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950;
+    }
+
+    .input {
+        @apply w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2.5 text-sm text-zinc-950 placeholder:text-zinc-400 shadow-none outline-none transition focus:border-zinc-400 focus:ring-2 focus:ring-zinc-200;
+    }
+
+    .label {
+        @apply text-sm font-medium text-zinc-700;
+    }
+
+    .sidebar-link {
+        @apply flex items-center justify-between rounded-lg border border-transparent px-3.5 py-2.5 text-sm font-medium text-zinc-600 transition hover:border-zinc-200 hover:bg-zinc-100 hover:text-zinc-950;
+    }
+
+    .sidebar-link-active {
+        @apply border-zinc-200 bg-zinc-100 text-zinc-950;
+    }
+
+    .sidebar-chip {
+        @apply inline-flex rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500;
+    }
+
+    .table-wrap {
+        @apply overflow-hidden rounded-2xl border border-zinc-200 bg-white;
+    }
+
+    .table {
+        @apply min-w-full divide-y divide-zinc-200 text-left text-sm;
+    }
+
+    .table thead {
+        @apply bg-zinc-50 text-[11px] uppercase tracking-[0.16em] text-zinc-500;
+    }
+
+    .table th {
+        @apply px-5 py-3.5 font-medium;
+    }
+
+    .table td {
+        @apply px-5 py-4 align-middle text-zinc-700;
+    }
+
+    .table tbody tr {
+        @apply border-t border-zinc-200 transition hover:bg-zinc-50;
+    }
+
+    .table-actions {
+        @apply flex flex-wrap items-center gap-2;
+    }
+
+    .badge-success {
+        @apply inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700;
+    }
+
+    .badge-danger {
+        @apply inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700;
+    }
+
+    .badge-neutral {
+        @apply inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700;
+    }
+
+    .flash-success {
+        @apply rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-700;
+    }
+
+    .flash-warning {
+        @apply rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-700;
+    }
+
+    .flash-danger {
+        @apply rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-700;
+    }
+
+    .card-grid {
+        @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-4;
+    }
+
+    .form-shell {
+        @apply surface max-w-4xl p-6 sm:p-8 lg:p-10;
+    }
+}

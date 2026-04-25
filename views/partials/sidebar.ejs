@@ -1,13 +1,70 @@
-<aside class="sidebar">
+<aside class="w-full border-b border-zinc-200 bg-white lg:min-h-screen lg:w-72 lg:border-b-0 lg:border-r">
+    <div class="flex h-full flex-col gap-6 px-4 py-5 sm:px-6 lg:px-5 lg:py-6">
+        <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Sistema</p>
+            <h2 class="mt-2 text-sm font-semibold text-zinc-950">Gestor de Asociaciones</h2>
+            <p class="mt-2 text-sm leading-6 text-zinc-500">
+                Socios, cuotas y pagos.
+            </p>
+        </div>
 
-    <nav class="sidebar__nav">
+        <nav class="space-y-5">
+            <div>
+                <p class="sidebar-chip mb-2.5">Navegación</p>
 
-        <a href="/">Inicio</a>
+                <div class="space-y-1.5">
+                    <a href="/dashboard" class="sidebar-link <%= currentPath === '/dashboard' ? 'sidebar-link-active' : '' %>">
+                        <span>Dashboard</span>
+                        <span class="text-xs text-zinc-400">Inicio</span>
+                    </a>
 
-        <a href="/socios">
-            Socios
-        </a>
+                    <a href="/socios" class="sidebar-link <%= currentPath.startsWith('/socios') ? 'sidebar-link-active' : '' %>">
+                        <span>Socios</span>
+                        <span class="text-xs text-zinc-400">CRUD</span>
+                    </a>
 
-    </nav>
+                    <a href="/login" class="sidebar-link <%= currentPath === '/login' ? 'sidebar-link-active' : '' %>">
+                        <span>Acceso</span>
+                        <span class="text-xs text-zinc-400">Auth</span>
+                    </a>
+                </div>
+            </div>
 
+            <div>
+                <p class="sidebar-chip mb-2.5">Próximos módulos</p>
+
+                <div class="space-y-1.5">
+                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
+                        <span>Cuotas</span>
+                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
+                    </div>
+
+                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
+                        <span>Pagos</span>
+                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
+                    </div>
+
+                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
+                        <span>Actividades</span>
+                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
+                    </div>
+
+                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
+                        <span>Inscripciones</span>
+                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
+                    </div>
+
+                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
+                        <span>Usuarios</span>
+                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
+                    </div>
+
+                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
+                        <span>Configuración</span>
+                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
 </aside>

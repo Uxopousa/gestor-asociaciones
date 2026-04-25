@@ -1,96 +1,57 @@
-<%- include("../partials/head") %>
+<%- include("../partials/head", { titulo, subtitulo }) %>
+<%- include("../partials/app-start") %>
 
-<body>
+<%- include("../partials/page-header", {
+    eyebrow: "Nuevo socio",
+    title: "Nuevo socio",
+    description: "Completa los datos del nuevo socio para incorporarlo al sistema.",
+    action: '<a href="/socios" class="btn-secondary">Volver al listado</a>'
+}) %>
 
-    <h1>Nuevo socio</h1>
+<div class="surface max-w-4xl p-6 sm:p-8 lg:p-10">
+    <form action="/socios" method="POST" class="space-y-7">
+        <div class="grid gap-5 md:grid-cols-2">
+            <div class="space-y-2">
+                <label for="nombre" class="label">Nombre</label>
+                <input type="text" id="nombre" name="nombre" class="input" required>
+            </div>
 
-    <form action="/socios" method="POST">
+            <div class="space-y-2">
+                <label for="apellidos" class="label">Apellidos</label>
+                <input type="text" id="apellidos" name="apellidos" class="input" required>
+            </div>
 
-        <div>
-            <label for="nombre">Nombre</label><br>
-            <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                required>
+            <div class="space-y-2">
+                <label for="dni" class="label">DNI</label>
+                <input type="text" id="dni" name="dni" class="input" required>
+            </div>
+
+            <div class="space-y-2">
+                <label for="email" class="label">Email</label>
+                <input type="email" id="email" name="email" class="input" placeholder="correo@dominio.com">
+            </div>
+
+            <div class="space-y-2">
+                <label for="telefono" class="label">Teléfono</label>
+                <input type="text" id="telefono" name="telefono" class="input" placeholder="600 000 000">
+            </div>
+
+            <div class="space-y-2">
+                <label for="fecha_alta" class="label">Fecha de alta</label>
+                <input type="date" id="fecha_alta" name="fecha_alta" class="input" required>
+            </div>
         </div>
 
-        <br>
-
-        <div>
-            <label for="apellidos">Apellidos</label><br>
-            <input
-                type="text"
-                id="apellidos"
-                name="apellidos"
-                required>
+        <div class="space-y-2">
+            <label for="direccion" class="label">Dirección</label>
+            <input type="text" id="direccion" name="direccion" class="input" placeholder="Calle, número, ciudad">
         </div>
 
-        <br>
-
-        <div>
-            <label for="dni">DNI</label><br>
-            <input
-                type="text"
-                id="dni"
-                name="dni"
-                required>
+        <div class="flex flex-wrap items-center gap-3 border-t border-zinc-200 pt-5">
+            <button type="submit" class="btn-primary">Guardar socio</button>
+            <a href="/socios" class="btn-ghost">Cancelar</a>
         </div>
-
-        <br>
-
-        <div>
-            <label for="email">Email</label><br>
-            <input
-                type="email"
-                id="email"
-                name="email">
-        </div>
-
-        <br>
-
-        <div>
-            <label for="telefono">Teléfono</label><br>
-            <input
-                type="text"
-                id="telefono"
-                name="telefono">
-        </div>
-
-        <br>
-
-        <div>
-            <label for="direccion">Dirección</label><br>
-            <input
-                type="text"
-                id="direccion"
-                name="direccion">
-        </div>
-
-        <br>
-
-        <div>
-            <label for="fecha_alta">Fecha de alta</label><br>
-            <input
-                type="date"
-                id="fecha_alta"
-                name="fecha_alta"
-                required>
-        </div>
-
-        <br>
-<button type="submit">
-    Guardar socio
-</button>
-
-<a href="/socios">Cancelar</a>
-
     </form>
-
-    <p>
-        <a href="/socios">Volver al listado</a>
-    </p>
-
-</body>
+</div>
 
 <%- include("../partials/footer") %>

@@ -10,6 +10,32 @@ async function obtenerTodos() {
     return rows;
 }
 
+async function obtenerUltimos(limit = 5) {
+    const [rows] = await pool.query(
+        `
+        SELECT *
+        FROM socios
+        ORDER BY fecha_alta DESC, id DESC
+        LIMIT ?
+        `,
+        [limit]
+    );
+
+    return rows;
+}
+
+async function obtenerResumen() {
+    const [rows] = await pool.query(`
+        SELECT
+            COUNT(*) AS total,
+            COALESCE(SUM(CASE WHEN activo = 1 THEN 1 ELSE 0 END), 0) AS activos,
+            COALESCE(SUM(CASE WHEN activo = 0 THEN 1 ELSE 0 END), 0) AS inactivos
+        FROM socios
+    `);
+
+    return rows[0];
+}
+
 
 async function crear(socio) {
     const sql = `
@@ -95,6 +121,8 @@ async function eliminar(id) {
 }
 module.exports = {
     obtenerTodos,
+    obtenerUltimos,
+    obtenerResumen,
     crear,
     obtenerPorId,
     actualizar,

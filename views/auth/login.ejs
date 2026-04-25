@@ -1,0 +1,30 @@
+<%- include("../partials/head", { titulo: "Acceso" }) %>
+<%- include("../partials/auth-start") %>
+
+<div class="auth-card">
+	<div class="flex items-start justify-between gap-4">
+		<div>
+			<p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500">Acceso al sistema</p>
+			<h1 class="mt-2 text-3xl font-semibold tracking-tight text-zinc-950">Gestor de Asociaciones</h1>
+			<p class="mt-3 text-sm leading-6 text-zinc-500">
+				Accede al panel de administración para gestionar socios y módulos operativos.
+			</p>
+		</div>
+
+		<span class="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+			Preview
+		</span>
+	</div>
+
+	<div class="mt-8 space-y-3 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-600">
+		<p>La sesión, las vistas y los componentes ya están preparados para una autenticación real.</p>
+		<p>Cuando se implemente el flujo, bastará con conectar el formulario sin rehacer esta pantalla.</p>
+	</div>
+
+	<div class="mt-8 grid gap-3 sm:grid-cols-2">
+		<a href="/dashboard" class="btn-primary">Ir al dashboard</a>
+		<a href="/socios" class="btn-secondary">Ver socios</a>
+	</div>
+</div>
+
+<%- include("../partials/auth-end") %>

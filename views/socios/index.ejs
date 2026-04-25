@@ -1,108 +1,68 @@
-<%- include("../partials/head") %>
+<%- include("../partials/head", { titulo, subtitulo }) %>
+<%- include("../partials/app-start") %>
 
-<body>
+<%- include("../partials/page-header", {
+    eyebrow: "Socios",
+    title: "Socios",
+    description: "Listado completo de miembros con edición, baja lógica y acceso rápido a alta de nuevos registros.",
+    action: '<a href="/socios/nuevo" class="btn-primary">Nuevo socio</a>'
+}) %>
 
-    <%- include("../partials/header") %>
+<%- include("../partials/flash") %>
 
-    <div class="layout">
+<div class="table-wrap">
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>DNI</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-        <%- include("../partials/sidebar") %>
+            <tbody>
+                <% socios.forEach((socio) => { %>
+                    <tr>
+                        <td>
+                            <div class="font-medium text-zinc-950"><%= socio.nombre %></div>
+                            <div class="mt-1 text-xs leading-5 text-zinc-500">ID <%= socio.id %></div>
+                        </td>
+                        <td><%= socio.apellidos %></td>
+                        <td><%= socio.dni %></td>
+                        <td class="text-zinc-600"><%= socio.email || "—" %></td>
+                        <td class="text-zinc-600"><%= socio.telefono || "—" %></td>
+                        <td>
+                            <% if (socio.activo) { %>
+                                <span class="badge-success">Activo</span>
+                            <% } else { %>
+                                <span class="badge-danger">Inactivo</span>
+                            <% } %>
+                        </td>
+                        <td class="align-middle">
+                            <div class="table-actions">
+                                <a href="/socios/<%= socio.id %>/editar" class="btn-secondary px-3 py-2 text-xs">Editar</a>
 
-        <main class="main">
-
-            <div class="page-header">
-
-                <h1>Socios</h1>
-
-                <a href="/socios/nuevo" class="btn btn-primary">
-                    Nuevo socio
-                </a>
-
-            </div>
-
-            <%- include("../partials/flash") %>
-
-            <div class="card">
-
-                <table class="table">
-
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>DNI</th>
-                            <th>Email</th>
-                            <th>Teléfono</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <% socios.forEach(socio => { %>
-
-                            <tr>
-
-                                <td><%= socio.nombre %></td>
-                                <td><%= socio.apellidos %></td>
-                                <td><%= socio.dni %></td>
-                                <td><%= socio.email %></td>
-                                <td><%= socio.telefono %></td>
-<td>
-    <% if (socio.activo) { %>
-        <span class="badge badge-success">Activo</span>
-    <% } else { %>
-        <span class="badge badge-danger">Inactivo</span>
-    <% } %>
-</td>
-                                <td>
-
-                                    <div class="table-actions">
-
-                                        <a
-                                            href="/socios/<%= socio.id %>/editar"
-                                            class="btn btn-warning btn-sm">
-                                            Editar
-                                        </a>
-
-                                        <% if (socio.activo) { %>
-
-                                            <form
-                                                action="/socios/<%= socio.id %>/eliminar"
-                                                method="POST">
-
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('¿Dar de baja este socio?')">
-
-                                                    Dar de baja
-
-                                                </button>
-
-                                            </form>
-
-                                        <% } %>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                        <% }) %>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </main>
-
+                                <% if (socio.activo) { %>
+                                    <form action="/socios/<%= socio.id %>/eliminar" method="POST">
+                                        <button type="submit" class="btn-primary px-3 py-2 text-xs" onclick="return confirm('¿Dar de baja este socio?')">
+                                            Dar de baja
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <span class="badge-neutral">Archivado</span>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
     </div>
+</div>
 
-</body>
-
-</html>
+<%- include("../partials/footer") %>
