@@ -4,6 +4,8 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 
+const bootstrapAuth = require("./config/bootstrapAuth");
+
 const app = express();
 
 // Configuración
@@ -53,6 +55,13 @@ app.use(errorHandler);
 // Servidor
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Servidor iniciado en http://localhost:${port}`);
-});
+bootstrapAuth()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Servidor iniciado en http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("No se pudo inicializar la autenticación:", error);
+    process.exit(1);
+  });

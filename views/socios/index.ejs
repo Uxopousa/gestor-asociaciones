@@ -1,11 +1,13 @@
 <%- include("../partials/head", { titulo, subtitulo }) %>
 <%- include("../partials/app-start") %>
 
+<% const puedeGestionarSocios = currentUser && currentUser.rol !== "lectura"; %>
+
 <%- include("../partials/page-header", {
     eyebrow: "Socios",
     title: "Socios",
     description: "Listado completo de miembros con edición, baja lógica y acceso rápido a alta de nuevos registros.",
-    action: '<a href="/socios/nuevo" class="btn-primary">Nuevo socio</a>'
+    action: puedeGestionarSocios ? '<a href="/socios/nuevo" class="btn-primary">Nuevo socio</a>' : ''
 }) %>
 
 <%- include("../partials/flash") %>
@@ -44,19 +46,23 @@
                             <% } %>
                         </td>
                         <td class="align-middle">
-                            <div class="table-actions">
-                                <a href="/socios/<%= socio.id %>/editar" class="btn-secondary px-3 py-2 text-xs">Editar</a>
+                            <% if (puedeGestionarSocios) { %>
+                                <div class="table-actions">
+                                    <a href="/socios/<%= socio.id %>/editar" class="btn-secondary px-3 py-2 text-xs">Editar</a>
 
-                                <% if (socio.activo) { %>
-                                    <form action="/socios/<%= socio.id %>/eliminar" method="POST">
-                                        <button type="submit" class="btn-primary px-3 py-2 text-xs" onclick="return confirm('¿Dar de baja este socio?')">
-                                            Dar de baja
-                                        </button>
-                                    </form>
-                                <% } else { %>
-                                    <span class="badge-neutral">Archivado</span>
-                                <% } %>
-                            </div>
+                                    <% if (socio.activo) { %>
+                                        <form action="/socios/<%= socio.id %>/eliminar" method="POST">
+                                            <button type="submit" class="btn-primary px-3 py-2 text-xs" onclick="return confirm('¿Dar de baja este socio?')">
+                                                Dar de baja
+                                            </button>
+                                        </form>
+                                    <% } else { %>
+                                        <span class="badge-neutral">Archivado</span>
+                                    <% } %>
+                                </div>
+                            <% } else { %>
+                                <span class="badge-neutral">Solo lectura</span>
+                            <% } %>
                         </td>
                     </tr>
                 <% }) %>

@@ -1,11 +1,13 @@
 <%- include("../partials/head", { titulo, subtitulo }) %>
 <%- include("../partials/app-start") %>
 
+<% const puedeGestionarSocios = currentUser && currentUser.rol !== "lectura"; %>
+
 <%- include("../partials/page-header", {
 	eyebrow: "Resumen",
 	title: "Dashboard",
 		description: "Vista general del estado actual y acceso rápido a los módulos principales.",
-	action: '<a href="/socios/nuevo" class="btn-primary">Nuevo socio</a><a href="/socios" class="btn-secondary">Ir al listado</a>'
+	action: puedeGestionarSocios ? '<a href="/socios/nuevo" class="btn-primary">Nuevo socio</a><a href="/socios" class="btn-secondary">Ir al listado</a>' : '<a href="/socios" class="btn-secondary">Ir al listado</a>'
 }) %>
 
 <%- include("../partials/flash") %>
@@ -95,10 +97,12 @@
 				<span class="text-xs text-zinc-400">Abrir</span>
 			</a>
 
+			<% if (puedeGestionarSocios) { %>
 			<a href="/socios/nuevo" class="sidebar-link border-zinc-200 bg-zinc-50 text-zinc-900 hover:bg-zinc-100">
 				<span>Nuevo socio</span>
 				<span class="text-xs text-zinc-400">Alta</span>
 			</a>
+			<% } %>
 		</div>
 	</div>
 </section>
