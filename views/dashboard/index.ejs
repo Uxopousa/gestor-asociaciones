@@ -103,6 +103,13 @@
 				<span class="text-xs text-zinc-400">Alta</span>
 			</a>
 			<% } %>
+
+			<% if (currentUser && currentUser.rol === "admin") { %>
+			<a href="/usuarios" class="sidebar-link border-zinc-200 bg-zinc-50 text-zinc-900 hover:bg-zinc-100">
+				<span>Usuarios</span>
+				<span class="text-xs text-zinc-400">Admin</span>
+			</a>
+			<% } %>
 		</div>
 	</div>
 </section>

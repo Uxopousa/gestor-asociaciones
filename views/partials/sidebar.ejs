@@ -23,6 +23,13 @@
                         <span class="text-xs text-zinc-400">CRUD</span>
                     </a>
 
+                    <% if (currentUser && currentUser.rol === 'admin') { %>
+                        <a href="/usuarios" class="sidebar-link <%= currentPath.startsWith('/usuarios') ? 'sidebar-link-active' : '' %>">
+                            <span>Usuarios</span>
+                            <span class="text-xs text-zinc-400">Admin</span>
+                        </a>
+                    <% } %>
+
                     <% if (currentUser) { %>
                         <form action="/login/logout" method="POST">
                             <button type="submit" class="sidebar-link w-full">
@@ -60,11 +67,6 @@
 
                     <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
                         <span>Inscripciones</span>
-                        <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
-                    </div>
-
-                    <div class="sidebar-link cursor-default border-dashed text-zinc-400 hover:bg-transparent hover:text-zinc-400">
-                        <span>Usuarios</span>
                         <span class="text-xs uppercase tracking-[0.18em]">Pendiente</span>
                     </div>
 

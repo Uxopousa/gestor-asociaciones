@@ -1,0 +1,58 @@
+<%- include("../partials/head", { titulo, subtitulo }) %>
+<%- include("../partials/app-start") %>
+
+<%- include("../partials/page-header", {
+    eyebrow: "Administración",
+    title: "Usuarios",
+    description: "Cuentas con acceso al sistema y nivel de permisos asociado.",
+    action: ''
+}) %>
+
+<%- include("../partials/flash") %>
+
+<div class="table-wrap">
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Alta</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% usuarios.forEach((usuario) => { %>
+                    <tr>
+                        <td>
+                            <div class="font-medium text-zinc-950"><%= usuario.nombre %></div>
+                            <div class="mt-1 text-xs text-zinc-500">ID <%= usuario.id %></div>
+                        </td>
+                        <td><%= usuario.email %></td>
+                        <td>
+                            <span class="badge-neutral"><%= usuario.rol %></span>
+                        </td>
+                        <td>
+                            <% if (usuario.activo) { %>
+                                <span class="badge-success">Activo</span>
+                            <% } else { %>
+                                <span class="badge-danger">Inactivo</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <%= new Date(usuario.created_at).toLocaleDateString("es-ES", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric"
+                            }) %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>

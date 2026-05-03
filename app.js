@@ -40,11 +40,13 @@ const indexRouter = require("./routes/index");
 const dashboardRouter = require("./routes/dashboard");
 const authRouter = require("./routes/auth");
 const sociosRouter = require("./routes/socios");
+const usuariosRouter = require("./routes/usuarios");
 
 app.use("/", indexRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/login", authRouter);
 app.use("/socios", sociosRouter);
+app.use("/usuarios", usuariosRouter);
 
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
