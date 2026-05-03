@@ -65,3 +65,19 @@ VALUES
     '2026-05-20',
     FALSE
 );
+
+INSERT INTO usuarios (
+    nombre,
+    email,
+    password_hash,
+    rol,
+    activo
+)
+VALUES
+(
+    'Administrador',
+    'admin@gestor.local',
+    '$2b$10$.zhOtz739gP.Hx/.JqYSx.PM6NR9D79pV3csqINvsLWu/UbPQNkUu',
+    'admin',
+    TRUE
+);

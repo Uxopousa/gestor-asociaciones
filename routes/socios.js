@@ -3,10 +3,13 @@ const router = express.Router();
 
 const sociosController = require("../controllers/sociosController");
 const asyncHandler = require("../utils/asyncHandler");
+const requireAuth = require("../middlewares/requireAuth");
 const {
   validarIdSocio,
   validarSocio
 } = require("../middlewares/sociosValidation");
+
+router.use(requireAuth);
 
 router.get("/", asyncHandler(sociosController.index));
 

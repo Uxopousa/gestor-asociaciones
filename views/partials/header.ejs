@@ -9,8 +9,21 @@
             <% } %>
         </div>
 
-        <span class="hidden rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-xs font-medium text-zinc-600 md:inline-flex md:self-start md:mt-1">
-            Panel administrativo
-        </span>
+        <div class="hidden items-center gap-3 md:flex">
+            <% if (currentUser) { %>
+                <div class="text-right">
+                    <p class="text-xs font-medium text-zinc-500"><%= currentUser.rol %></p>
+                    <p class="text-sm font-medium text-zinc-950"><%= currentUser.nombre %></p>
+                </div>
+
+                <form action="/login/logout" method="POST">
+                    <button type="submit" class="btn-secondary px-3 py-2 text-xs">Salir</button>
+                </form>
+            <% } else { %>
+                <span class="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-xs font-medium text-zinc-600">
+                    Panel administrativo
+                </span>
+            <% } %>
+        </div>
     </div>
 </header>

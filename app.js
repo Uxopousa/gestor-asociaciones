@@ -25,6 +25,8 @@ app.use((req, res, next) => {
   res.locals.appName = "Gestor de Asociaciones";
   res.locals.currentPath = req.path;
   res.locals.currentYear = new Date().getFullYear();
+  res.locals.currentUser = req.session.user || null;
+  res.locals.isAuthenticated = Boolean(req.session.user);
   res.locals.flashMessage = req.session.flashMessage;
   delete req.session.flashMessage;
 
