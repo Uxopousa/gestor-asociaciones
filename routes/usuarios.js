@@ -11,5 +11,11 @@ router.use(requireAuth);
 router.use(requireRole(["admin"]));
 
 router.get("/", asyncHandler(usuariosController.index));
+router.get("/nuevo", usuariosController.nuevo);
+router.post(
+	"/nuevo",
+	require("../middlewares/usuariosValidation").validarUsuario,
+	asyncHandler(usuariosController.crear)
+);
 
 module.exports = router;

@@ -1,0 +1,66 @@
+<%- include("../partials/head", { titulo, subtitulo }) %>
+<%- include("../partials/app-start") %>
+
+<%- include("../partials/page-header", {
+    eyebrow: "Administración",
+    title: "Nuevo usuario",
+    description: "Crea una cuenta con permisos de acceso al sistema.",
+    action: '<a href="/usuarios" class="btn-secondary">Volver al listado</a>'
+}) %>
+
+<%- include("../partials/flash") %>
+
+<div class="form-shell">
+    <% if (formError) { %>
+        <div class="mb-6 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm leading-6 text-rose-700">
+            <%= formError %>
+        </div>
+    <% } %>
+
+    <form action="/usuarios/nuevo" method="POST" class="grid gap-5">
+        <div class="space-y-2">
+            <label for="nombre" class="label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="<%= errores.nombre ? 'input input-invalid' : 'input' %>" value="<%= valores.nombre || '' %>" required>
+            <% if (errores.nombre) { %><p class="form-error"><%= errores.nombre %></p><% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="email" class="label">Email</label>
+            <input type="email" id="email" name="email" class="<%= errores.email ? 'input input-invalid' : 'input' %>" value="<%= valores.email || '' %>" autocomplete="email" required>
+            <% if (errores.email) { %><p class="form-error"><%= errores.email %></p><% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="password" class="label">Contraseña</label>
+            <input type="password" id="password" name="password" class="<%= errores.password ? 'input input-invalid' : 'input' %>" autocomplete="new-password" required>
+            <% if (errores.password) { %><p class="form-error"><%= errores.password %></p><% } %>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+            <div class="space-y-2">
+                <label for="rol" class="label">Rol</label>
+                <select id="rol" name="rol" class="<%= errores.rol ? 'input input-invalid' : 'input' %>" required>
+                    <option value="admin" <%= (valores.rol || 'gestor') === 'admin' ? 'selected' : '' %>>Administrador</option>
+                    <option value="gestor" <%= (valores.rol || 'gestor') === 'gestor' ? 'selected' : '' %>>Gestor</option>
+                    <option value="lectura" <%= (valores.rol || 'gestor') === 'lectura' ? 'selected' : '' %>>Lectura</option>
+                </select>
+                <% if (errores.rol) { %><p class="form-error"><%= errores.rol %></p><% } %>
+            </div>
+
+            <div class="space-y-2">
+                <label for="activo" class="label">Estado</label>
+                <select id="activo" name="activo" class="input">
+                    <option value="1" <%= (valores.activo || '1') === '1' ? 'selected' : '' %>>Activo</option>
+                    <option value="0" <%= valores.activo === '0' ? 'selected' : '' %>>Inactivo</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button type="submit" class="btn-primary">Crear usuario</button>
+            <a href="/usuarios" class="btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<%- include("../partials/footer") %>

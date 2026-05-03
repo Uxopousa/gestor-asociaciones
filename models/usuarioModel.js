@@ -26,7 +26,26 @@ async function obtenerTodos() {
   return rows;
 }
 
+async function crear(usuario) {
+  const [result] = await pool.query(
+    `
+    INSERT INTO usuarios (nombre, email, password_hash, rol, activo)
+    VALUES (?, ?, ?, ?, ?)
+    `,
+    [
+      usuario.nombre,
+      usuario.email,
+      usuario.password_hash,
+      usuario.rol,
+      usuario.activo
+    ]
+  );
+
+  return result.insertId;
+}
+
 module.exports = {
   obtenerPorEmail,
-  obtenerTodos
+  obtenerTodos,
+  crear
 };

@@ -5,7 +5,7 @@
     eyebrow: "Administración",
     title: "Usuarios",
     description: "Cuentas con acceso al sistema y nivel de permisos asociado.",
-    action: ''
+    action: puedeCrearUsuario ? '<a href="/usuarios/nuevo" class="btn-primary">Nuevo usuario</a>' : ''
 }) %>
 
 <%- include("../partials/flash") %>
