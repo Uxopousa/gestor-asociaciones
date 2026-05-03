@@ -1,0 +1,107 @@
+<%
+    const fieldValue = (name) => {
+        if (!socio || socio[name] === undefined || socio[name] === null) {
+            return "";
+        }
+
+        return socio[name];
+    };
+
+    const fieldError = (name) => (errores && errores[name] ? errores[name] : "");
+    const inputClass = (name) => (fieldError(name) ? "input input-invalid" : "input");
+    const dateValue = (value) => {
+        if (!value) {
+            return "";
+        }
+
+        if (typeof value === "string") {
+            return value.slice(0, 10);
+        }
+
+        return new Date(value).toISOString().split("T")[0];
+    };
+%>
+
+<% if (Object.keys(errores || {}).length > 0) { %>
+    <div class="mb-6 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
+        <p class="text-sm font-medium text-zinc-950">Revisa los campos marcados antes de continuar.</p>
+    </div>
+<% } %>
+
+<form action="<%= action %>" method="POST" class="space-y-7">
+    <div class="grid gap-5 md:grid-cols-2">
+        <div class="space-y-2">
+            <label for="nombre" class="label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" value="<%= fieldValue('nombre') %>" class="<%= inputClass('nombre') %>" required>
+            <% if (fieldError('nombre')) { %>
+                <p class="form-error"><%= fieldError('nombre') %></p>
+            <% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="apellidos" class="label">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" value="<%= fieldValue('apellidos') %>" class="<%= inputClass('apellidos') %>" required>
+            <% if (fieldError('apellidos')) { %>
+                <p class="form-error"><%= fieldError('apellidos') %></p>
+            <% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="dni" class="label">DNI</label>
+            <input type="text" id="dni" name="dni" value="<%= fieldValue('dni') %>" class="<%= inputClass('dni') %>" required>
+            <% if (fieldError('dni')) { %>
+                <p class="form-error"><%= fieldError('dni') %></p>
+            <% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="email" class="label">Email</label>
+            <input type="email" id="email" name="email" value="<%= fieldValue('email') %>" class="<%= inputClass('email') %>" placeholder="correo@dominio.com">
+            <% if (fieldError('email')) { %>
+                <p class="form-error"><%= fieldError('email') %></p>
+            <% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="telefono" class="label">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" value="<%= fieldValue('telefono') %>" class="<%= inputClass('telefono') %>" placeholder="600 000 000">
+            <% if (fieldError('telefono')) { %>
+                <p class="form-error"><%= fieldError('telefono') %></p>
+            <% } %>
+        </div>
+
+        <div class="space-y-2">
+            <label for="fecha_alta" class="label">Fecha de alta</label>
+            <input type="date" id="fecha_alta" name="fecha_alta" value="<%= dateValue(fieldValue('fecha_alta')) %>" class="<%= inputClass('fecha_alta') %>" required>
+            <% if (fieldError('fecha_alta')) { %>
+                <p class="form-error"><%= fieldError('fecha_alta') %></p>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="space-y-2">
+        <label for="direccion" class="label">Dirección</label>
+        <input type="text" id="direccion" name="direccion" value="<%= fieldValue('direccion') %>" class="<%= inputClass('direccion') %>" placeholder="Calle, número, ciudad">
+        <% if (fieldError('direccion')) { %>
+            <p class="form-error"><%= fieldError('direccion') %></p>
+        <% } %>
+    </div>
+
+    <% if (mostrarEstado) { %>
+        <div class="space-y-2 md:w-1/3">
+            <label for="activo" class="label">Estado</label>
+            <select id="activo" name="activo" class="<%= inputClass('activo') %>">
+                <option value="1" <%= fieldValue('activo') === '1' || fieldValue('activo') === 1 || fieldValue('activo') === true ? 'selected' : '' %>>Activo</option>
+                <option value="0" <%= fieldValue('activo') === '0' || fieldValue('activo') === 0 || fieldValue('activo') === false ? 'selected' : '' %>>Inactivo</option>
+            </select>
+            <% if (fieldError('activo')) { %>
+                <p class="form-error"><%= fieldError('activo') %></p>
+            <% } %>
+        </div>
+    <% } %>
+
+    <div class="flex flex-wrap items-center gap-3 border-t border-zinc-200 pt-5">
+        <button type="submit" class="btn-primary"><%= submitLabel %></button>
+        <a href="<%= backHref %>" class="btn-ghost"><%= backLabel %></a>
+    </div>
+</form>

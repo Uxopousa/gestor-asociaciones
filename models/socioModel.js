@@ -1,31 +1,31 @@
 const pool = require("../config/database");
 
 async function obtenerTodos() {
-    const [rows] = await pool.query(`
+  const [rows] = await pool.query(`
         SELECT *
         FROM socios
         ORDER BY apellidos, nombre
     `);
 
-    return rows;
+  return rows;
 }
 
 async function obtenerUltimos(limit = 5) {
-    const [rows] = await pool.query(
-        `
+  const [rows] = await pool.query(
+    `
         SELECT *
         FROM socios
         ORDER BY fecha_alta DESC, id DESC
         LIMIT ?
         `,
-        [limit]
-    );
+    [limit]
+  );
 
-    return rows;
+  return rows;
 }
 
 async function obtenerResumen() {
-    const [rows] = await pool.query(`
+  const [rows] = await pool.query(`
         SELECT
             COUNT(*) AS total,
             COALESCE(SUM(CASE WHEN activo = 1 THEN 1 ELSE 0 END), 0) AS activos,
@@ -33,12 +33,11 @@ async function obtenerResumen() {
         FROM socios
     `);
 
-    return rows[0];
+  return rows[0];
 }
 
-
 async function crear(socio) {
-    const sql = `
+  const sql = `
         INSERT INTO socios (
             nombre,
             apellidos,
@@ -52,32 +51,29 @@ async function crear(socio) {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    const valores = [
-        socio.nombre,
-        socio.apellidos,
-        socio.dni,
-        socio.email,
-        socio.telefono,
-        socio.direccion,
-        socio.fecha_alta,
-        socio.activo
-    ];
+  const valores = [
+    socio.nombre,
+    socio.apellidos,
+    socio.dni,
+    socio.email,
+    socio.telefono,
+    socio.direccion,
+    socio.fecha_alta,
+    socio.activo
+  ];
 
-    const [resultado] = await pool.query(sql, valores);
+  const [resultado] = await pool.query(sql, valores);
 
-    return resultado;
+  return resultado;
 }
 async function obtenerPorId(id) {
-    const [rows] = await pool.query(
-        "SELECT * FROM socios WHERE id = ?",
-        [id]
-    );
+  const [rows] = await pool.query("SELECT * FROM socios WHERE id = ?", [id]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function actualizar(id, socio) {
-    const sql = `
+  const sql = `
         UPDATE socios
         SET
             nombre = ?,
@@ -91,40 +87,40 @@ async function actualizar(id, socio) {
         WHERE id = ?
     `;
 
-    const valores = [
-        socio.nombre,
-        socio.apellidos,
-        socio.dni,
-        socio.email,
-        socio.telefono,
-        socio.direccion,
-        socio.fecha_alta,
-        socio.activo,
-        id
-    ];
+  const valores = [
+    socio.nombre,
+    socio.apellidos,
+    socio.dni,
+    socio.email,
+    socio.telefono,
+    socio.direccion,
+    socio.fecha_alta,
+    socio.activo,
+    id
+  ];
 
-    const [resultado] = await pool.query(sql, valores);
+  const [resultado] = await pool.query(sql, valores);
 
-    return resultado;
+  return resultado;
 }
 async function eliminar(id) {
-    const [resultado] = await pool.query(
-        `
+  const [resultado] = await pool.query(
+    `
         UPDATE socios
         SET activo = FALSE
         WHERE id = ?
         `,
-        [id]
-    );
+    [id]
+  );
 
-    return resultado;
+  return resultado;
 }
 module.exports = {
-    obtenerTodos,
-    obtenerUltimos,
-    obtenerResumen,
-    crear,
-    obtenerPorId,
-    actualizar,
-    eliminar
+  obtenerTodos,
+  obtenerUltimos,
+  obtenerResumen,
+  crear,
+  obtenerPorId,
+  actualizar,
+  eliminar
 };

@@ -1,107 +1,177 @@
+const { validationResult } = require("express-validator");
 const socioModel = require("../models/socioModel");
+const createHttpError = require("../utils/createHttpError");
+
+function extraerErrores(validationOutcome) {
+  return validationOutcome.array().reduce((acumulador, error) => {
+    if (!acumulador[error.path]) {
+      acumulador[error.path] = error.msg;
+    }
+
+    return acumulador;
+  }, {});
+}
+
+function normalizarFormulario(socio = {}) {
+  return {
+    ...socio,
+    nombre: socio.nombre || "",
+    apellidos: socio.apellidos || "",
+    dni: socio.dni || "",
+    email: socio.email || "",
+    telefono: socio.telefono || "",
+    direccion: socio.direccion || "",
+    fecha_alta: socio.fecha_alta
+      ? new Date(socio.fecha_alta).toISOString().split("T")[0]
+      : "",
+    activo:
+      typeof socio.activo === "boolean"
+        ? socio.activo
+          ? "1"
+          : "0"
+        : socio.activo || "1"
+  };
+}
+
+function renderFormulario(res, view, options) {
+  return res.status(options.statusCode || 200).render(view, {
+    titulo: options.titulo,
+    subtitulo: options.subtitulo,
+    socio: normalizarFormulario(options.socio),
+    errores: options.errores || {},
+    mostrarEstado: options.mostrarEstado || false
+  });
+}
 
 function construirSocioDesdeFormulario(body) {
-    return {
-        nombre: body.nombre,
-        apellidos: body.apellidos,
-        dni: body.dni,
-        email: body.email || null,
-        telefono: body.telefono || null,
-        direccion: body.direccion || null,
-        fecha_alta: body.fecha_alta,
-        activo: body.activo === "1"
-    };
+  return {
+    nombre: body.nombre,
+    apellidos: body.apellidos,
+    dni: body.dni,
+    email: body.email || null,
+    telefono: body.telefono || null,
+    direccion: body.direccion || null,
+    fecha_alta: body.fecha_alta,
+    activo: body.activo === "1"
+  };
 }
 
 async function index(req, res) {
-    const socios = await socioModel.obtenerTodos();
+  const socios = await socioModel.obtenerTodos();
 
-    res.render("socios/index", {
-        titulo: "Socios",
-        subtitulo: "Gestión de altas, bajas y seguimiento de miembros.",
-        socios
-    });
+  res.render("socios/index", {
+    titulo: "Socios",
+    subtitulo: "Gestión de altas, bajas y seguimiento de miembros.",
+    socios
+  });
 }
 
 function nuevo(req, res) {
-    res.render("socios/nuevo", {
-        titulo: "Nuevo socio",
-        subtitulo: "Registrar un nuevo miembro en el sistema."
-    });
+  renderFormulario(res, "socios/nuevo", {
+    titulo: "Nuevo socio",
+    subtitulo: "Registra un nuevo miembro en el sistema.",
+    socio: {},
+    errores: {},
+    mostrarEstado: false
+  });
 }
 
 async function crear(req, res) {
-    try {
-        const socio = construirSocioDesdeFormulario({
-            ...req.body,
-            activo: "1"
-        });
+  const validationOutcome = validationResult(req);
 
-        await socioModel.crear(socio);
+  if (!validationOutcome.isEmpty()) {
+    return renderFormulario(res, "socios/nuevo", {
+      titulo: "Nuevo socio",
+      subtitulo: "Registra un nuevo miembro en el sistema.",
+      socio: req.body,
+      errores: extraerErrores(validationOutcome),
+      mostrarEstado: false,
+      statusCode: 422
+    });
+  }
 
-        req.session.flashMessage = {
-            tipo: "success",
-            texto: "Socio creado correctamente."
-        };
+  const socio = construirSocioDesdeFormulario({
+    ...req.body,
+    activo: "1"
+  });
 
-        res.redirect("/socios");
+  await socioModel.crear(socio);
 
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error al crear el socio.");
-    }
+  req.session.flashMessage = {
+    tipo: "success",
+    texto: "Socio creado correctamente."
+  };
+
+  res.redirect("/socios");
 }
 
 async function editar(req, res) {
-    const socio = await socioModel.obtenerPorId(req.params.id);
+  const socio = await socioModel.obtenerPorId(req.params.id);
 
-    if (!socio) {
-        return res.status(404).send("Socio no encontrado.");
-    }
+  if (!socio) {
+    throw createHttpError(404, "Socio no encontrado.");
+  }
 
-    res.render("socios/editar", {
-        titulo: "Editar socio",
-        subtitulo: "Actualiza los datos de un miembro existente.",
-        socio
-    });
+  renderFormulario(res, "socios/editar", {
+    titulo: "Editar socio",
+    subtitulo: "Actualiza los datos del socio.",
+    socio,
+    errores: {},
+    mostrarEstado: true
+  });
 }
 
 async function actualizar(req, res) {
-    const socioExistente = await socioModel.obtenerPorId(req.params.id);
+  const validationOutcome = validationResult(req);
 
-    if (!socioExistente) {
-        return res.status(404).send("Socio no encontrado.");
-    }
+  if (!validationOutcome.isEmpty()) {
+    return renderFormulario(res, "socios/editar", {
+      titulo: "Editar socio",
+      subtitulo: "Actualiza los datos del socio.",
+      socio: {
+        ...req.body,
+        id: req.params.id
+      },
+      errores: extraerErrores(validationOutcome),
+      mostrarEstado: true,
+      statusCode: 422
+    });
+  }
 
-    const socio = construirSocioDesdeFormulario(req.body);
+  const socioExistente = await socioModel.obtenerPorId(req.params.id);
 
-    await socioModel.actualizar(req.params.id, socio);
+  if (!socioExistente) {
+    throw createHttpError(404, "Socio no encontrado.");
+  }
 
-    req.session.flashMessage = {
-        tipo: "success",
-        texto: "Socio actualizado correctamente."
-    };
+  const socio = construirSocioDesdeFormulario(req.body);
 
-    res.redirect("/socios");
+  await socioModel.actualizar(req.params.id, socio);
+
+  req.session.flashMessage = {
+    tipo: "success",
+    texto: "Socio actualizado correctamente."
+  };
+
+  res.redirect("/socios");
 }
 
 async function eliminar(req, res) {
+  await socioModel.eliminar(req.params.id);
 
-    await socioModel.eliminar(req.params.id);
+  req.session.flashMessage = {
+    tipo: "success",
+    texto: "Socio dado de baja correctamente."
+  };
 
-    req.session.flashMessage = {
-        tipo: "success",
-        texto: "Socio dado de baja correctamente."
-    };
-
-    res.redirect("/socios");
+  res.redirect("/socios");
 }
 
 module.exports = {
-    index,
-    nuevo,
-    crear,
-    editar,
-    actualizar,
-    eliminar
+  index,
+  nuevo,
+  crear,
+  editar,
+  actualizar,
+  eliminar
 };

@@ -4,68 +4,20 @@
 <%- include("../partials/page-header", {
     eyebrow: "Editar socio",
     title: "Editar socio",
-    description: "Actualiza los datos del registro manteniendo la baja lógica y la trazabilidad.",
+    description: "Actualiza los datos del socio.",
     action: '<a href="/socios" class="btn-secondary">Volver al listado</a>'
 }) %>
 
-<div class="surface max-w-4xl p-6 sm:p-8 lg:p-10">
-    <form action="/socios/<%= socio.id %>" method="POST" class="space-y-7">
-        <div class="grid gap-5 md:grid-cols-2">
-            <div class="space-y-2">
-                <label for="nombre" class="label">Nombre</label>
-                <input type="text" id="nombre" name="nombre" value="<%= socio.nombre %>" class="input" required>
-            </div>
-
-            <div class="space-y-2">
-                <label for="apellidos" class="label">Apellidos</label>
-                <input type="text" id="apellidos" name="apellidos" value="<%= socio.apellidos %>" class="input" required>
-            </div>
-
-            <div class="space-y-2">
-                <label for="dni" class="label">DNI</label>
-                <input type="text" id="dni" name="dni" value="<%= socio.dni %>" class="input" required>
-            </div>
-
-            <div class="space-y-2">
-                <label for="email" class="label">Email</label>
-                <input type="email" id="email" name="email" value="<%= socio.email || '' %>" class="input">
-            </div>
-
-            <div class="space-y-2">
-                <label for="telefono" class="label">Teléfono</label>
-                <input type="text" id="telefono" name="telefono" value="<%= socio.telefono || '' %>" class="input">
-            </div>
-
-            <div class="space-y-2">
-                <label for="fecha_alta" class="label">Fecha de alta</label>
-                <input
-                    type="date"
-                    id="fecha_alta"
-                    name="fecha_alta"
-                    value="<%= socio.fecha_alta.toISOString().split('T')[0] %>"
-                    class="input"
-                    required>
-            </div>
-        </div>
-
-        <div class="space-y-2">
-            <label for="direccion" class="label">Dirección</label>
-            <input type="text" id="direccion" name="direccion" value="<%= socio.direccion || '' %>" class="input">
-        </div>
-
-        <div class="space-y-2 md:w-1/3">
-            <label for="activo" class="label">Estado</label>
-            <select id="activo" name="activo" class="input">
-                <option value="1" <%= socio.activo ? "selected" : "" %>>Activo</option>
-                <option value="0" <%= !socio.activo ? "selected" : "" %>>Inactivo</option>
-            </select>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-3 border-t border-zinc-200 pt-5">
-            <button type="submit" class="btn-primary">Guardar cambios</button>
-            <a href="/socios" class="btn-ghost">Cancelar</a>
-        </div>
-    </form>
+<div class="form-shell">
+    <%- include("partials/form", {
+        action: "/socios/" + socio.id,
+        submitLabel: "Guardar cambios",
+        backHref: "/socios",
+        backLabel: "Cancelar",
+        socio,
+        errores,
+        mostrarEstado: true
+    }) %>
 </div>
 
 <%- include("../partials/footer") %>

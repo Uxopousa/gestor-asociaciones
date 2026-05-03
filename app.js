@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("./config/env");
 
 const express = require("express");
 const session = require("express-session");
@@ -14,21 +14,21 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false
-    })
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  })
 );
 
 app.use((req, res, next) => {
-    res.locals.appName = "Gestor de Asociaciones";
-    res.locals.currentPath = req.path;
-    res.locals.currentYear = new Date().getFullYear();
-    res.locals.flashMessage = req.session.flashMessage;
-    delete req.session.flashMessage;
+  res.locals.appName = "Gestor de Asociaciones";
+  res.locals.currentPath = req.path;
+  res.locals.currentYear = new Date().getFullYear();
+  res.locals.flashMessage = req.session.flashMessage;
+  delete req.session.flashMessage;
 
-    next();
+  next();
 });
 
 // Rutas
@@ -42,7 +42,15 @@ app.use("/dashboard", dashboardRouter);
 app.use("/login", authRouter);
 app.use("/socios", sociosRouter);
 
+const notFound = require("./middlewares/notFound");
+const errorHandler = require("./middlewares/errorHandler");
+
+app.use(notFound);
+app.use(errorHandler);
+
 // Servidor
-app.listen(3000, () => {
-    console.log("Servidor iniciado en http://localhost:3000");
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Servidor iniciado en http://localhost:${port}`);
 });
