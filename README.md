@@ -102,21 +102,29 @@ views/                  Vistas EJS y parciales reutilizables.
 | `/usuarios` | Administración de usuarios |
 
 ## Estado del proyecto
-La base principal está funcional y cubre autenticación, dashboard, gestión de socios y administración de usuarios.
+La base principal está funcional y cubre autenticación, panel principal, gestión de socios y administración de usuarios.
 
-Los siguientes módulos están todavía pendientes y forman parte de la evolución del proyecto: cuotas, pagos, actividades, inscripciones y configuración.
+Los módulos pendientes forman parte de la evolución natural del proyecto: cuotas, pagos, actividades, inscripciones y configuración.
 
-## Evolución prevista
+## Mejoras previstas
 | Prioridad | Mejora |
 | --- | --- |
-| Alta | Completar módulos de cuotas, pagos, actividades e inscripciones |
+| Alta | Completar los módulos de cuotas, pagos, actividades e inscripciones |
 | Alta | Añadir edición y baja de usuarios |
-| Alta | Introducir persistencia de sesión y endurecer seguridad |
+| Alta | Introducir persistencia de sesión y endurecer la seguridad |
+| Alta | Incorporar pruebas automatizadas reales |
 | Media | Separar migraciones y seeds de forma más clara |
-| Media | Incorporar pruebas automatizadas |
 | Media | Mejorar el tratamiento de errores y duplicados |
+| Media | Revisar la experiencia visual del frontend con una capa más cuidada |
 | Baja | Exponer una API si se necesita integrar otra interfaz |
 | Baja | Completar módulos secundarios del menú lateral |
+
+## Hoja de ruta
+| Fase | Enfoque |
+| --- | --- |
+| Siguiente iteración | Cerrar usuarios, seguridad y pruebas reales |
+| Siguiente bloque funcional | Cuotas, pagos, actividades e inscripciones |
+| Evolución posterior | Refuerzo visual, API externa y módulos secundarios |
 
 ## Notas de implementación
 | Punto | Detalle |
