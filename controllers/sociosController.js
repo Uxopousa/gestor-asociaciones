@@ -56,6 +56,24 @@ function construirSocioDesdeFormulario(body) {
   };
 }
 
+function esErrorDuplicado(error) {
+  return Boolean(error && error.code === "ER_DUP_ENTRY");
+}
+
+function obtenerCampoDuplicado(error) {
+  const sqlMessage = String(error && error.sqlMessage ? error.sqlMessage : "");
+
+  if (sqlMessage.includes("uk_socios_dni")) {
+    return "dni";
+  }
+
+  if (sqlMessage.includes("uk_socios_email")) {
+    return "email";
+  }
+
+  return "dni";
+}
+
 async function index(req, res) {
   const socios = await socioModel.obtenerTodos();
 
@@ -95,7 +113,27 @@ async function crear(req, res) {
     activo: "1"
   });
 
-  await socioModel.crear(socio);
+  try {
+    await socioModel.crear(socio);
+  } catch (error) {
+    if (esErrorDuplicado(error)) {
+      const campoDuplicado = obtenerCampoDuplicado(error);
+
+      return renderFormulario(res, "socios/nuevo", {
+        titulo: "Nuevo socio",
+        subtitulo: "Registra un nuevo miembro en el sistema.",
+        socio: req.body,
+        errores: {
+          [campoDuplicado]: "Ya existe un socio con ese DNI o email."
+        },
+        mostrarEstado: false,
+        formError: "No se ha podido crear el socio porque ya existe un registro duplicado.",
+        statusCode: 409
+      });
+    }
+
+    throw error;
+  }
 
   req.session.flashMessage = {
     tipo: "success",
@@ -146,7 +184,30 @@ async function actualizar(req, res) {
 
   const socio = construirSocioDesdeFormulario(req.body);
 
-  await socioModel.actualizar(req.params.id, socio);
+  try {
+    await socioModel.actualizar(req.params.id, socio);
+  } catch (error) {
+    if (esErrorDuplicado(error)) {
+      const campoDuplicado = obtenerCampoDuplicado(error);
+
+      return renderFormulario(res, "socios/editar", {
+        titulo: "Editar socio",
+        subtitulo: "Actualiza los datos del socio.",
+        socio: {
+          ...req.body,
+          id: req.params.id
+        },
+        errores: {
+          [campoDuplicado]: "Ya existe un socio con ese DNI o email."
+        },
+        mostrarEstado: true,
+        formError: "No se han podido guardar los cambios porque ya existe un registro duplicado.",
+        statusCode: 409
+      });
+    }
+
+    throw error;
+  }
 
   req.session.flashMessage = {
     tipo: "success",
