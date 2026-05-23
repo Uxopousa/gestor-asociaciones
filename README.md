@@ -71,6 +71,7 @@ El proyecto resuelve autenticación, control por roles y gestión de socios y us
 | Variable | Descripción |
 | --- | --- |
 | `PORT` | Puerto de arranque |
+| `NODE_ENV` | Entorno de ejecución (`development` o `production`) |
 | `DB_HOST` | Host de MySQL |
 | `DB_PORT` | Puerto de MySQL |
 | `DB_NAME` | Nombre de la base de datos |

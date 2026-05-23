@@ -7,6 +7,11 @@ const path = require("path");
 const bootstrapAuth = require("./config/bootstrapAuth");
 
 const app = express();
+const isProduction = process.env.NODE_ENV === "production";
+
+if (isProduction) {
+  app.set("trust proxy", 1);
+}
 
 // Configuración
 app.set("view engine", "ejs");
@@ -19,7 +24,15 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    name: "gestor.sid",
+    proxy: isProduction,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: isProduction,
+      maxAge: 1000 * 60 * 60 * 8
+    }
   })
 );
 
