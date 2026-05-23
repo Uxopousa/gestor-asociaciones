@@ -48,6 +48,19 @@
 
 		<button type="submit" class="btn-primary w-full">Iniciar sesión</button>
 	</form>
+
+	<% if (modoDesarrollo) { %>
+		<div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+			<p class="font-medium">Acceso de demostración</p>
+			<p class="mt-1 text-amber-800">
+				Pulsa el botón para entrar directamente con el usuario <strong><%= demoEmail %></strong>.
+				Está habilitado solo en desarrollo.
+			</p>
+			<form action="/login/demo" method="POST" class="mt-4">
+				<button type="submit" class="btn-secondary w-full">Entrar como demo</button>
+			</form>
+		</div>
+	<% } %>
 </div>
 
 <%- include("../partials/auth-end") %>

@@ -111,6 +111,11 @@ views/                  Vistas EJS y parciales reutilizables.
 | `/socios` | Gestión de socios |
 | `/usuarios` | Administración de usuarios |
 
+## Acceso de demostración
+Para desarrollo existe un acceso rápido desde la pantalla de login. El botón **Entrar como demo** inicia sesión con el usuario `admin@gestor.local` sin tener que escribir credenciales.
+
+Ese acceso no está disponible en producción.
+
 ## Estado del proyecto
 La base principal está funcional y cubre autenticación, panel principal, gestión de socios y administración de usuarios.
 
