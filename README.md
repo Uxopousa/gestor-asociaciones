@@ -55,25 +55,25 @@ El proyecto resuelve autenticación, control por roles y gestión de socios y us
 ## Instalación
 1. Clonar el repositorio.
 2. Instalar dependencias con `npm install`.
-3. Crear la base de datos `gestor_asociaciones` e importar `database/schema.sql`.
-4. Importar `database/seed.sql` si se desean datos de prueba.
-5. Copiar `.env.example` a `.env` y ajustar los valores.
-6. Generar el CSS con `npm run build:css`.
+3. Copiar `.env.example` a `.env` y ajustar los valores si lo necesitas.
+4. Generar el CSS con `npm run build:css`.
 
 ## Arranque rápido con Docker
-1. Asegúrate de tener Docker Desktop iniciado.
-2. Ejecuta `npm run db:up` para levantar MySQL.
-3. Ejecuta `npm run dev:full` para arrancar la aplicación con la base de datos disponible.
+La forma más sencilla de probar el proyecto es esta:
 
-Si prefieres parar el contenedor cuando termines, usa `npm run db:down`.
+1. Asegúrate de tener Docker Desktop iniciado.
+2. Ejecuta `npm run dev:full`.
+
+Ese comando levanta MySQL en Docker si hace falta, importa automáticamente `database/schema.sql` y `database/seed.sql`, y después arranca la aplicación.
+
+Si quieres parar el contenedor cuando termines, usa `npm run db:down`.
 
 ## Ejecución
 | Modo | Comando |
 | --- | --- |
 | Desarrollo | `npm run dev` |
 | Producción local | `npm start` |
-| Con Docker | `docker compose up --build` |
-| Base de datos local | `npm run db:up` |
+| Base de datos con Docker | `npm run db:up` |
 | Arranque completo | `npm run dev:full` |
 
 ## Variables de entorno
@@ -115,6 +115,8 @@ views/                  Vistas EJS y parciales reutilizables.
 La base principal está funcional y cubre autenticación, panel principal, gestión de socios y administración de usuarios.
 
 Los módulos pendientes forman parte de la evolución natural del proyecto: cuotas, pagos, actividades, inscripciones y configuración.
+
+Para probarlo en local no hace falta preparar MySQL a mano: `npm run dev:full` crea o reutiliza el contenedor, carga el esquema y los datos de prueba, y arranca la app.
 
 ## Mejoras previstas
 | Prioridad | Mejora |

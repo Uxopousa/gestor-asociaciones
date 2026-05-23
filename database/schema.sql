@@ -4,7 +4,7 @@
 -- Versión 1.0
 -- =====================================================
 
-CREATE TABLE socios (
+CREATE TABLE IF NOT EXISTS socios (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 
     nombre VARCHAR(100) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE socios (
     UNIQUE KEY uk_socios_email (email)
 );
 
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 
     nombre VARCHAR(120) NOT NULL,

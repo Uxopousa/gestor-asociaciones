@@ -4,7 +4,7 @@
 -- Datos de prueba
 -- =====================================================
 
-INSERT INTO socios (
+INSERT IGNORE INTO socios (
     nombre,
     apellidos,
     dni,
@@ -66,7 +66,7 @@ VALUES
     FALSE
 );
 
-INSERT INTO usuarios (
+INSERT IGNORE INTO usuarios (
     nombre,
     email,
     password_hash,

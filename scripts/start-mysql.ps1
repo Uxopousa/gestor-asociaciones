@@ -32,6 +32,24 @@ function Wait-ForMySql {
     throw "MySQL no respondió a tiempo dentro del contenedor $Name."
 }
 
+function Import-SqlFile {
+    param(
+        [string]$ContainerName,
+        [string]$FilePath,
+        [string]$DatabaseName
+    )
+
+    if (-not (Test-Path $FilePath)) {
+        return
+    }
+
+    Get-Content -Raw $FilePath | docker exec -i $ContainerName mysql -u gestor -pgestor $DatabaseName
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "No se pudo importar $FilePath en la base de datos $DatabaseName."
+    }
+}
+
 if (Test-ContainerExists -Name $containerName) {
     if (-not (Test-ContainerRunning -Name $containerName)) {
         docker start $containerName | Out-Null
@@ -41,4 +59,6 @@ if (Test-ContainerExists -Name $containerName) {
 }
 
 Wait-ForMySql -Name $containerName
+Import-SqlFile -ContainerName $containerName -FilePath (Join-Path $PSScriptRoot "..\database\schema.sql") -DatabaseName "gestor_asociaciones"
+Import-SqlFile -ContainerName $containerName -FilePath (Join-Path $PSScriptRoot "..\database\seed.sql") -DatabaseName "gestor_asociaciones"
 Write-Host "MySQL listo en el contenedor $containerName."
