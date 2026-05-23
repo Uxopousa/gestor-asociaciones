@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS socios (
 
     UNIQUE KEY uk_socios_dni (dni),
     UNIQUE KEY uk_socios_email (email)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -41,4 +41,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
         ON UPDATE CURRENT_TIMESTAMP,
 
     UNIQUE KEY uk_usuarios_email (email)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE socios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE usuarios CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

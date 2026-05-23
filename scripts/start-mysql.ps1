@@ -43,7 +43,7 @@ function Import-SqlFile {
         return
     }
 
-    Get-Content -Raw $FilePath | docker exec -i $ContainerName mysql -u gestor -pgestor $DatabaseName
+    Get-Content -Raw -Encoding utf8 $FilePath | docker exec -i $ContainerName mysql --default-character-set=utf8mb4 -u gestor -pgestor $DatabaseName
 
     if ($LASTEXITCODE -ne 0) {
         throw "No se pudo importar $FilePath en la base de datos $DatabaseName."

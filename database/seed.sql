@@ -4,7 +4,9 @@
 -- Datos de prueba
 -- =====================================================
 
-INSERT IGNORE INTO socios (
+SET NAMES utf8mb4;
+
+INSERT INTO socios (
     nombre,
     apellidos,
     dni,
@@ -64,9 +66,17 @@ VALUES
     'Ronda Norte 14',
     '2026-05-20',
     FALSE
-);
+)
+ON DUPLICATE KEY UPDATE
+    nombre = VALUES(nombre),
+    apellidos = VALUES(apellidos),
+    email = VALUES(email),
+    telefono = VALUES(telefono),
+    direccion = VALUES(direccion),
+    fecha_alta = VALUES(fecha_alta),
+    activo = VALUES(activo);
 
-INSERT IGNORE INTO usuarios (
+INSERT INTO usuarios (
     nombre,
     email,
     password_hash,
@@ -80,4 +90,9 @@ VALUES
     '$2b$10$.zhOtz739gP.Hx/.JqYSx.PM6NR9D79pV3csqINvsLWu/UbPQNkUu',
     'admin',
     TRUE
-);
+)
+ON DUPLICATE KEY UPDATE
+    nombre = VALUES(nombre),
+    password_hash = VALUES(password_hash),
+    rol = VALUES(rol),
+    activo = VALUES(activo);
