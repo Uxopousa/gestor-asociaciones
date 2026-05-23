@@ -1,98 +1,84 @@
 # Gestor de Asociaciones
 
-Aplicación web monolítica para la gestión de socios y cuentas de usuario de una asociación.
-Está implementada con Express, EJS y MySQL, con persistencia en base de datos relacional.
-El acceso se resuelve con sesión de usuario y control de permisos por rol.
-Lo que está terminado ahora mismo es el panel principal, el CRUD de socios y la administración básica de usuarios.
+Aplicación web para la gestión interna de una asociación, construida como un monolito modular con Express, EJS y MySQL.
+El proyecto resuelve autenticación, control por roles y gestión de socios y usuarios, con una base preparada para crecer hacia módulos administrativos más amplios.
 
-## Funcionalidades
+## Resumen rápido
+| Campo | Valor |
+| --- | --- |
+| Tipo de aplicación | Gestión web para asociaciones |
+| Backend | Node.js + Express 5 |
+| Plantillas | EJS |
+| Persistencia | MySQL 8 |
+| Autenticación | Sesión de usuario |
+| Autorización | Roles (`admin`, `gestor`, `lectura`) |
+| Estilos | Tailwind CSS |
+| Despliegue | Local o Docker Compose |
 
-- Inicio de sesión y cierre de sesión.
-- Dashboard con resumen de socios y últimos registros.
-- Listado, alta, edición y baja lógica de socios.
-- Listado y alta de usuarios del sistema.
-- Control de acceso por sesión y por rol.
-- Validación de formularios en servidor.
-- Mensajes temporales de confirmación y error.
-- Estructura preparada para módulos que todavía no están implementados: cuotas, pagos, actividades, inscripciones y configuración.
+## Qué incluye ahora
+| Módulo | Estado |
+| --- | --- |
+| Inicio de sesión y cierre de sesión | Funcional |
+| Dashboard con resumen y últimos socios | Funcional |
+| CRUD de socios | Funcional |
+| Alta y listado de usuarios | Funcional |
+| Control de acceso por rol | Funcional |
+| Validación de formularios | Funcional |
+| Mensajes flash | Funcional |
+| Tests automáticos | Funcional (helpers y middlewares) |
+| Cuotas, pagos, actividades e inscripciones | Pendiente |
 
 ## Tecnologías
-
-- Node.js
-- Express 5
-- EJS
-- MySQL 8
-- mysql2
-- express-session
-- express-validator
-- bcryptjs
-- Tailwind CSS
-- dotenv
-- Docker y Docker Compose
-- ESLint
+| Tecnología | Uso |
+| --- | --- |
+| Node.js | Runtime de la aplicación |
+| Express 5 | Servidor HTTP y rutas |
+| EJS | Renderizado de vistas |
+| MySQL 8 | Base de datos relacional |
+| mysql2 | Acceso a datos |
+| express-session | Sesión de usuario |
+| express-validator | Validación de formularios |
+| bcryptjs | Hash de contraseñas |
+| Tailwind CSS | UI y utilidades visuales |
+| Docker / Docker Compose | Entorno reproducible |
+| ESLint / Prettier | Calidad y formato |
 
 ## Requisitos
-
-- Node.js y npm.
-- MySQL 8 o compatible.
-- Base de datos creada con el esquema del proyecto.
-- Variables de entorno configuradas.
-- Opcional: Docker y Docker Compose para levantar todo el entorno.
+| Requisito | Detalle |
+| --- | --- |
+| Node.js | Instalado junto con npm |
+| MySQL | Versión 8 o compatible |
+| Base de datos | Esquema importado desde `database/schema.sql` |
+| Variables de entorno | Configuradas a partir de `.env.example` |
+| Docker | Opcional, para levantar el entorno completo |
 
 ## Instalación
-
-1. Clona el repositorio.
-2. Instala dependencias:
-
-```bash
-npm install
-```
-
-3. Crea la base de datos `gestor_asociaciones` e importa `database/schema.sql`.
-4. Si quieres datos de prueba, importa también `database/seed.sql`.
-5. Copia `.env.example` a `.env` y ajusta los valores.
-6. Genera el CSS si hace falta:
-
-```bash
-npm run build:css
-```
-
-## Variables de entorno
-
-Estas son las variables usadas por la aplicación:
-
-```env
-PORT=3000
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=gestor_asociaciones
-DB_USER=gestor
-DB_PASSWORD=gestor
-SESSION_SECRET=change-me
-```
+1. Clonar el repositorio.
+2. Instalar dependencias con `npm install`.
+3. Crear la base de datos `gestor_asociaciones` e importar `database/schema.sql`.
+4. Importar `database/seed.sql` si se desean datos de prueba.
+5. Copiar `.env.example` a `.env` y ajustar los valores.
+6. Generar el CSS con `npm run build:css`.
 
 ## Ejecución
+| Modo | Comando |
+| --- | --- |
+| Desarrollo | `npm run dev` |
+| Producción local | `npm start` |
+| Con Docker | `docker compose up --build` |
 
-### Modo local
-
-```bash
-npm run dev
-```
-
-Para arrancar sin nodemon:
-
-```bash
-npm start
-```
-
-### Con Docker
-
-```bash
-docker compose up --build
-```
+## Variables de entorno
+| Variable | Descripción |
+| --- | --- |
+| `PORT` | Puerto de arranque |
+| `DB_HOST` | Host de MySQL |
+| `DB_PORT` | Puerto de MySQL |
+| `DB_NAME` | Nombre de la base de datos |
+| `DB_USER` | Usuario de MySQL |
+| `DB_PASSWORD` | Contraseña de MySQL |
+| `SESSION_SECRET` | Secreto de sesión |
 
 ## Estructura del proyecto
-
 ```text
 app.js                 Punto de entrada de la aplicación.
 config/                Configuración de entorno, base de datos y arranque de autenticación.
@@ -104,31 +90,37 @@ public/                Archivos estáticos servidos por Express.
 routes/                Definición de rutas HTTP.
 src/styles/            Fuente de estilos de Tailwind.
 utils/                 Utilidades compartidas.
-views/                 Vistas EJS y parciales reutilizables.
+views/                  Vistas EJS y parciales reutilizables.
 ```
 
-## API
-
-No hay una API JSON pública separada.
-La aplicación renderiza HTML desde el servidor con EJS y usa rutas web para login, dashboard, socios y usuarios.
+## Rutas principales
+| Ruta | Descripción |
+| --- | --- |
+| `/login` | Acceso al sistema |
+| `/dashboard` | Resumen general |
+| `/socios` | Gestión de socios |
+| `/usuarios` | Administración de usuarios |
 
 ## Estado del proyecto
+La base principal está funcional y cubre autenticación, dashboard, gestión de socios y administración de usuarios.
 
-La parte principal está funcional:
+Los siguientes módulos están todavía pendientes y forman parte de la evolución del proyecto: cuotas, pagos, actividades, inscripciones y configuración.
 
-- autenticación,
-- panel principal,
-- gestión de socios,
-- alta y listado de usuarios.
+## Evolución prevista
+| Prioridad | Mejora |
+| --- | --- |
+| Alta | Completar módulos de cuotas, pagos, actividades e inscripciones |
+| Alta | Añadir edición y baja de usuarios |
+| Alta | Introducir persistencia de sesión y endurecer seguridad |
+| Media | Separar migraciones y seeds de forma más clara |
+| Media | Incorporar pruebas automatizadas |
+| Media | Mejorar el tratamiento de errores y duplicados |
+| Baja | Exponer una API si se necesita integrar otra interfaz |
+| Baja | Completar módulos secundarios del menú lateral |
 
-Hay módulos que todavía no están desarrollados y solo aparecen como enlace o texto pendiente en la interfaz: cuotas, pagos, actividades, inscripciones y configuración.
-
-## Posibles mejoras
-
-- Añadir edición y baja de usuarios.
-- Separar la inicialización de la base de datos en migraciones y seeds más claras.
-- Sustituir el store de sesión en memoria por uno persistente.
-- Incorporar pruebas automatizadas.
-- Mejorar el tratamiento de errores de base de datos y conflictos por duplicado.
-- Exponer una API si en el futuro hace falta integrar otra interfaz.
-- Completar los módulos pendientes del menú lateral.
+## Notas de implementación
+| Punto | Detalle |
+| --- | --- |
+| API pública | No existe una API JSON separada; la app renderiza HTML con EJS |
+| Menú lateral | Los módulos pendientes aparecen como guía de evolución |
+| Calidad | El proyecto usa ESLint y Prettier para mantener consistencia |
