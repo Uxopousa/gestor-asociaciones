@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
+    "db:up": "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/start-mysql.ps1",
+    "db:down": "docker stop gestor-mysql",
+    "dev:full": "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/start-dev.ps1",
     "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/css/app.css --minify",
     "watch:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/css/app.css --watch",
     "build": "npm run build:css",

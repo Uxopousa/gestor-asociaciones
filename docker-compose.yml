@@ -1,35 +1,21 @@
 services:
-  app:
-    build: .
-    container_name: gestor-asociaciones-app
-    depends_on:
-      - mysql
-    environment:
-      PORT: 3000
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_NAME: gestor_asociaciones
-      DB_USER: gestor
-      DB_PASSWORD: gestor
-      SESSION_SECRET: ${SESSION_SECRET:-change-me}
+  db:
+    image: mysql:8.0
+    container_name: gestor-mysql
+    restart: unless-stopped
     ports:
-      - "3000:3000"
-
-  mysql:
-    image: mysql:8.4
-    container_name: gestor-asociaciones-db
-
+      - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: gestor_asociaciones
       MYSQL_USER: gestor
       MYSQL_PASSWORD: gestor
-
-    ports:
-      - "3306:3306"
-
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     volumes:
-      - mysql_data:/var/lib/mysql
+      - gestor-mysql-data:/var/lib/mysql
 
 volumes:
-  mysql_data:
+  gestor-mysql-data:

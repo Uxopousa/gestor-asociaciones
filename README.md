@@ -60,12 +60,21 @@ El proyecto resuelve autenticación, control por roles y gestión de socios y us
 5. Copiar `.env.example` a `.env` y ajustar los valores.
 6. Generar el CSS con `npm run build:css`.
 
+## Arranque rápido con Docker
+1. Asegúrate de tener Docker Desktop iniciado.
+2. Ejecuta `npm run db:up` para levantar MySQL.
+3. Ejecuta `npm run dev:full` para arrancar la aplicación con la base de datos disponible.
+
+Si prefieres parar el contenedor cuando termines, usa `npm run db:down`.
+
 ## Ejecución
 | Modo | Comando |
 | --- | --- |
 | Desarrollo | `npm run dev` |
 | Producción local | `npm start` |
 | Con Docker | `docker compose up --build` |
+| Base de datos local | `npm run db:up` |
+| Arranque completo | `npm run dev:full` |
 
 ## Variables de entorno
 | Variable | Descripción |
@@ -112,8 +121,9 @@ Los módulos pendientes forman parte de la evolución natural del proyecto: cuot
 | --- | --- |
 | Alta | Completar los módulos de cuotas, pagos, actividades e inscripciones |
 | Alta | Añadir edición y baja de usuarios |
-| Alta | Introducir persistencia de sesión y endurecer la seguridad |
+| Alta | Introducir persistencia de sesión con un store compartido |
 | Alta | Incorporar pruebas automatizadas reales |
+| Media | Pulir la capa visual con una interfaz más cuidada, consistente y atractiva |
 | Media | Separar migraciones y seeds de forma más clara |
 | Media | Mejorar el tratamiento de errores y duplicados |
 | Media | Revisar la experiencia visual del frontend con una capa más cuidada |
